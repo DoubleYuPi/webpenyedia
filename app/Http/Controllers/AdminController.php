@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Hash;
 class AdminController extends Controller
 {
     public function admindashboard(){
-        $pekerjaan = Pekerjaan::all(); //test github push
+        $pekerjaan = Pekerjaan::all(); //test github push 2
 
         $penyedia = Penyedia::query()->withAvg('pekerjaans', 'nilai_total')->get();
 
