@@ -27,7 +27,7 @@
                       @foreach ($penyedia as $penyedias)
                       <tr>
                         <td>{{$no++}}</td>
-                        <td>{{$penyedias->nama}}</td>
+                        <td><a href="/profilpenyedia/{{$penyedias->id}}">{{$penyedias->nama}}</a></td>
                         <td>{{$penyedias->npwp}}</td>
                         <td>{{$penyedias->alamat}}</td>
                         <td>

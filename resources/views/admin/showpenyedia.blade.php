@@ -72,7 +72,7 @@
 </div>
 <!-- /.content-header -->
 
-  @include('')
+  @include('admin.detailpenyedia')
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
