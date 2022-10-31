@@ -48,7 +48,7 @@
                         $pekerjaans->nilai_total = $pekerjaans->nilai_1 + $pekerjaans->nilai_2 + $pekerjaans->nilai_3 + $pekerjaans->nilai_4;
                         @endphp
                         <td>{{$pekerjaans->nilai_total}}</td>
-                        <td><a href="{{ route('pekerjaans.download', $pekerjaans->id) }}">{{$pekerjaans->status}}</a></td>
+                        <td><a href="{{ route('pekerjaans.download', $pekerjaans->id) }}"><u>{{$pekerjaans->status}}</u></a></td>
                         <td>
                           <a href="/bahp/{{$pekerjaans->id}}" type="button" class="btn btn-outline-primary">Upload</a>
                         </td>
