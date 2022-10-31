@@ -300,6 +300,12 @@ class AdminController extends Controller
         return redirect()->back()->with('message','BAHP Pekerjaan Berhasil diupload!');
     }
 
+    public function showpenyedia(Penyedia $penyedia){
+        // $pekerjaan = $penyedia->pekerjaans;
+        
+        return view('admin.showpenyedia', compact('penyedia'));
+    }
+
     public function download($id)
 {
     $pekerjaan = Pekerjaan::where('id', $id)->firstOrFail();

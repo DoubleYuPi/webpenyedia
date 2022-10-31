@@ -83,6 +83,8 @@ Route::post('/updatebahppekerjaan/{id}',[AdminController::class,'update_bahppeke
 
 Route::get('pekerjaans/{id}/download',[AdminController::class,'download'])->name('pekerjaans.download');
 
+Route::get('/profilpenyedia/{penyedia}',[AdminController::class,'showpenyedia'])->name('showpenyedia');
+
 /*Route::get('/penyedias/{penyedia}', function (Penyedia $penyedia) {
     return view('admin.test', [
         'pekerjaans' => $penyedia->pekerjaan
