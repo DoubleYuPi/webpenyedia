@@ -18,6 +18,8 @@
                         <th style="width: 10px">No.</th>
                         <th>Nama Penyedia</th>
                         <th>NPWP</th>
+                        <th>Email</th>
+                        <th>No. Telp/HP</th>
                         <th>Alamat</th>
                         <th style="width: 120px">Aksi</th>
                       </tr>
@@ -29,6 +31,8 @@
                         <td>{{$no++}}</td>
                         <td><a href="/profilpenyedia/{{$penyedias->id}}">{{$penyedias->nama}}</a></td>
                         <td>{{$penyedias->npwp}}</td>
+                        <td>{{$penyedias->email}}</td>
+                        <td>{{$penyedias->telp}}</td>
                         <td>{{$penyedias->alamat}}</td>
                         <td>
                             <a href="/editpenyedia/{{$penyedias->id}}" type="button" class="btn btn-outline-primary">Edit</a>

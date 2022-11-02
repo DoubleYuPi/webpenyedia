@@ -19,23 +19,26 @@
                   <input type="text" name="npwp" class="form-control" id="exampleInputPassword1" placeholder="NPWP" data-inputmask='"mask": "99.999.999.9-999.999"' data-mask>
                 </div>
                 <div class="form-group">
+                  <label>Bentuk Usaha</label>
+                  <select class="form-control select2bs4" style="width: 100%;" data-placeholder="Bentuk Usaha" name="bentuk_usaha">
+                    <option value="" disabled  selected>Bentuk Usaha</option>
+                    <option>Perseorangan</option>
+                    <option value="CV">Perseroan Komanditer (CV)</option>
+                    <option value="PT">Perseroan Terbatas (PT)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Email</label>
+                  <input type="text" name="email" class="form-control" id="exampleInputPassword1" placeholder="email">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">No. Telp/HP</label>
+                  <input type="text" name="telp" class="form-control" id="exampleInputPassword1" placeholder="telp">
+                </div>
+                <div class="form-group">
                     <label>Alamat</label>
                     <textarea name="alamat" class="form-control" rows="3" placeholder="Alamat"></textarea>
                 </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <label>Latitude</label>
-                        <input type="text" name="lati" class="form-control" id="exampleInputPassword1" placeholder="Lat">
-                      </div>
-                    </div>
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <label>Longitude</label>
-                        <input type="text" name="longi" class="form-control" id="exampleInputPassword1" placeholder="Long">
-                      </div>
-                    </div>
-                  </div>
                 
               </div>
               <!-- /.card-body -->
