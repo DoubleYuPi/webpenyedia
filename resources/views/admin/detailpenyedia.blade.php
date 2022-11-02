@@ -12,6 +12,12 @@
           <h5><i class="fas fa-map-pin"></i>&nbsp Alamat: {{$penyedia->alamat}}</h5>
         </div>
       </div>
+      <div class="card-body">
+        <div class="col-12">
+          <h5><i class="fas fa-id-card"></i>&nbsp Bentuk Usaha: {{$penyedia->bentuk_usaha}}</h5><br>
+          <h5><i class="fas fa-map-pin"></i>&nbsp Email: {{$penyedia->email}}</h5>
+        </div>
+      </div>
     </div>
   </div>
   </section>
