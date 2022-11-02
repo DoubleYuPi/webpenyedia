@@ -17,9 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->string('npwp');
+            $table->string('bentuk_usaha');
+            $table->string('email');
+            $table->string('telp');
             $table->string('alamat');
-            $table->float('lati');
-            $table->float('longi');
             $table->float('nilai')->default(0.0);
             $table->timestamps();
         });
