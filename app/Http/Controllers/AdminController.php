@@ -301,9 +301,9 @@ class AdminController extends Controller
     }
 
     public function showpenyedia(Penyedia $penyedia){
-        // $pekerjaan = $penyedia->pekerjaans;
+        $pekerjaan = $penyedia->pekerjaans;
         
-        return view('admin.showpenyedia', compact('penyedia'));
+        return view('admin.showpenyedia', compact('penyedia','pekerjaan'));
     }
 
     public function download($id)
