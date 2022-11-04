@@ -49,7 +49,7 @@
         <!-- ./col -->
         <div class="col-lg-6 col-8">
           <!-- small box -->
-          <div class="small-box bg-success">
+          <div class="small-box bg-lightblue">
             <div class="inner">
               <h3>{{$pekerjaan->count('pekerjaan')}}</h3>
 
@@ -64,7 +64,7 @@
         <!-- ./col -->
         <div class="col-lg-6 col-8">
           <!-- small box -->
-          <div class="small-box bg-warning">
+          <div class="small-box bg-lightblue">
             <div class="inner">
               <h3>Rp. {{number_format($pekerjaan->sum('nilai_kontrak'))}}</h3>
 
