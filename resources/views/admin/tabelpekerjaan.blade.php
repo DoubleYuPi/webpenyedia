@@ -28,6 +28,7 @@
                         <th>Paket Pekerjaan</th>
                         <th>Tanggal Kontrak</th>
                         <th>Nama Perusahaan</th>
+                        <th>Jenis Pekerjaan</th>
                         <th>Lokasi Pekerjaan</th>
                         <th>HPS</th>
                         <th>Nilai Kontrak</th>
@@ -43,6 +44,7 @@
                         <td>{{$pekerjaans->pekerjaan}}</td>
                         <td>{{$pekerjaans->tanggal->format('d/m/Y')}}</td>
                         <td>{{$pekerjaans->penyedia->nama}}</td>
+                        <td>{{$pekerjaans->jenis_pekerjaan}}</td>
                         <td>{{$pekerjaans->lokasi}}</td>
                         {{-- <td>{{$pekerjaans->user->name}}</td> --}}
                         <td>Rp. {{number_format($pekerjaans->hps,0,',',',')}}</td>

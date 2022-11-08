@@ -60,6 +60,17 @@
                   </select>
                 </div>
                 <div class="form-group">
+                  <label for="exampleInputPassword1">Jenis Pekerjaan</label>
+                  <select name="jenis_pekerjaan" class="form-control select2bs4" style="width: 100%;">
+                    <option value="" disabled  selected>Jenis Pekerjaan</option>
+                    <option>Barang</option>
+                    <option>Pekerjaan Konstruksi</option>
+                    <option>Jasa Konsultansi (Konstruksi)</option>
+                    <option>Jasa Konsultansi (Non Konstruksi)</option>
+                    <option>Jasa Lainnya</option>
+                  </select>
+                </div>
+                <div class="form-group">
                   <label for="exampleInputEmail1">HPS</label>
                   <input type="number" step=".01" name="hps" class="form-control" id="exampleInputEmail1" placeholder="Pekerjaan">
                 </div>

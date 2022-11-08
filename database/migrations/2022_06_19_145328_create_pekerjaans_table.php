@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('pekerjaan');
             $table->date('tanggal');
             $table->string('lokasi');
+            $table->string('jenis_pekerjaan');
             $table->float('hps');
             $table->float('nilai_kontrak');
             $table->float('lati');
