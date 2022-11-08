@@ -79,6 +79,9 @@
       </div>
     </section>
 
+@foreach ($pekerjaan as $pekerjaans)
+  
+@endforeach    
   <section class="content">
     <div class="container-fluid">
       <div class="row">
