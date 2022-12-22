@@ -79,23 +79,71 @@
       </div>
     </section>
 
-@foreach ($pekerjaan as $pekerjaans)
-  
-@endforeach    
-  <section class="content">
-    <div class="container-fluid">
-      <div class="row">
-        <!-- left column -->
-        <div class="col-12">
-          <!-- general form elements -->
-          <div class="card card-primary">
-            <!-- /.card-header -->
-            <!-- form start -->
-                <div class="card-body">
-                  
-                </div>
-              <!-- /.card-body -->
-            
-          </div>
+@foreach ($jeniskerja as $jeniskerjas)
+<section class="content">
+  <div class="container-fluid">
+    <div class="card card-default collapsed-card">
+      <div class="card-header collapsed-card">
+        <h3 class="card-title">
+          <b>{{$jeniskerjas->nama_jenis}} - {{round($jeniskerjas->pekerjaans()->where('penyedia_id', $penyedia->id)->avg('nilai_total'),1)}}</b>
+        </h3>
+    
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+            <i class="fas fa-plus"></i>
+          </button>
         </div>
-    </section>
+      </div>
+      <div class="card-body table-responsive">
+        <table id="tabeldetail" class="table table-bordered display" style="width: 100%">
+          <thead>
+            <tr>
+              <th style="width: 10px" rowspan="2">Tahun Anggaran</th>
+              <th rowspan="2">Tanggal Kontrak</th>
+              <th rowspan="2">Paket Pekerjaan</th>
+              <th rowspan="2">Nama Perusahaan</th>
+              <th rowspan="2">Lokasi Pekerjaan</th>
+              <th rowspan="2">Jenis Pekerjaan</th>
+              <th rowspan="2">HPS</th>
+              <th rowspan="2">Nilai</th>
+              <th rowspan="2">Dokumen</th>
+              <th colspan="2">Tanggal</th>
+            </tr>
+
+            <tr>
+              <td>Tgl Buat</td>
+              <td>Tgl Update</td>
+            </tr>
+          </thead>
+          <tbody>
+            @php $no = 1; /*$totalNilai = 0.0;*/ @endphp
+            @foreach ($jeniskerjas->pekerjaans()->where('penyedia_id', $penyedia->id)->get() as $pekerjaans)
+            <tr>
+              <td>{{$pekerjaans->ta}}</td>
+              <td>{{$pekerjaans->tanggal->format('d/m/Y')}}</td>
+              <td>{{$pekerjaans->pekerjaan}}</td>
+              <td>{{$pekerjaans->penyedia->nama}}</td>
+              <td>{{$pekerjaans->lokasi}}</td>
+              <td>{{$pekerjaans->jeniskerja->nama_jenis}}</td>
+              <td>Rp. {{number_format($pekerjaans->hps,0,',',',')}}</td>
+              @php
+              $pekerjaans->nilai_total = $pekerjaans->nilai_1 + $pekerjaans->nilai_2 + $pekerjaans->nilai_3 + $pekerjaans->nilai_4;
+              @endphp
+              <td>{{$pekerjaans->nilai_total}}</td>
+              <td><a href="{{ route('pekerjaans.download', $pekerjaans->id) }}"><u>{{$pekerjaans->status}}</u></a></td>
+              <td>
+                 
+              </td>
+              <td>
+                
+                
+              </td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+@endforeach

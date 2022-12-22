@@ -24,29 +24,37 @@
                   <table id="tabelpekerjaan" class="table table-bordered">
                     <thead>
                       <tr>
-                        <th style="width: 10px">Tahun Anggara</th>
+                        <th style="width: 10px">Tahun Anggaran</th>
                         <th>Paket Pekerjaan</th>
                         <th>Tanggal Kontrak</th>
                         <th>Nama Perusahaan</th>
                         <th>Jenis Pekerjaan</th>
                         <th>Lokasi Pekerjaan</th>
+                        <th>Personil Manajerial</th>
                         <th>HPS</th>
                         <th>Nilai Kontrak</th>
                         <th>Gambar</th>
                         <th style="width: 120px">Aksi</th>
+                        <th>Personil</th>
                       </tr>
                     </thead>
                     <tbody>
                       @php $no = 1; @endphp
                       @foreach ($pekerjaan as $pekerjaans)
                       <tr>
-                        <td>{{$pekerjaans->tanggal->format('Y')}}</td>
+                        <td>{{$pekerjaans->ta}}</td>
                         <td>{{$pekerjaans->pekerjaan}}</td>
                         <td>{{$pekerjaans->tanggal->format('d/m/Y')}}</td>
                         <td>{{$pekerjaans->penyedia->nama}}</td>
-                        <td>{{$pekerjaans->jenis_pekerjaan}}</td>
+                        <td>{{$pekerjaans->jeniskerja->nama_jenis}}</td>
                         <td>{{$pekerjaans->lokasi}}</td>
                         {{-- <td>{{$pekerjaans->user->name}}</td> --}}
+                        {{-- @if (is_null($pekerjaans->personil->nama))
+                          <td></td>
+                        @else
+                          <td>{{$pekerjaans->personil->nama}}</td>
+                        @endif --}}
+                        <td><a href="">{{$pekerjaans->personil->nama ?? ''}}</a></td>
                         <td>Rp. {{number_format($pekerjaans->hps,0,',',',')}}</td>
                         <td>Rp. {{number_format($pekerjaans->nilai_kontrak,0,',',',')}}</td>
                         <td>
@@ -61,6 +69,7 @@
                               
                             @endif
                         </td>
+                        <td><a href="/tambahpersonil/{{$pekerjaans->id}}" type="button" class="btn btn-outline-success btn-block">Tambah</a></td>
                       </tr>
                       @endforeach
                     </tbody>

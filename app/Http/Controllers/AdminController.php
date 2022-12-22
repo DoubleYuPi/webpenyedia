@@ -12,9 +12,15 @@ use App\Models\Penyedia;
 
 use App\Models\Pekerjaan;
 
+use App\Models\Jeniskerja;
+
+use App\Models\Personil;
+
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Hash;
+
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -82,8 +88,9 @@ class AdminController extends Controller
         $penyedia = Penyedia::all();
         //$user = Auth::user()->users;
         $user = User::all();
+        $jeniskerja = Jeniskerja::all();
 
-        return view('admin.addpekerjaan', compact('penyedia','user'));
+        return view('admin.addpekerjaan', compact('penyedia','user','jeniskerja'));
     }
 
     public function insertpekerjaan(Request $request){
@@ -112,8 +119,9 @@ class AdminController extends Controller
         $pekerjaan = Pekerjaan::find($id);
         $penyedia = Penyedia::all();
         $user = User::all();
+        $jeniskerja = Jeniskerja::all();
         
-        return view('admin.editpekerjaan', compact('pekerjaan','penyedia','user'));
+        return view('admin.editpekerjaan', compact('pekerjaan','penyedia','user','jeniskerja'));
     }
 
     public function updatepekerjaan(Request $request, $id){
@@ -220,14 +228,37 @@ class AdminController extends Controller
         return view('admin.datanilai_penyedia', compact('penyedia', 'pekerjaan'));
     }
 
+    public function tabelnilai_jeniskerja(){
+        //$penyedia = Penyedia::all();
+        $pekerjaan = Pekerjaan::all();
+
+        $jeniskerja = Jeniskerja::query()->withAvg('pekerjaans', 'nilai_total')->get();
+
+        //$totalAvg=$penyedia->pekerjaans()->avg('nilai_total');
+        //$totalAvg = Pekerjaan::selectRaw("penyedia_id, AVG(nilai_total) AS avg")->groupBy('penyedia_id')->get();
+
+        return view('admin.datanilai_jeniskerja', compact('penyedia', 'pekerjaan','jeniskerja'));
+    }
+
     public function showpekerjaan(Penyedia $penyedia){
         //$pekerjaan = Penyedia::with('pekerjaans')->where('id',$penyedia->id)->get();
         $pekerjaan = $penyedia->pekerjaans;
+        $jeniskerja = Jeniskerja::all();
 
         $totalAvg=$penyedia->pekerjaans()->avg('nilai_total');
         
         //return view('admin.showpekerjaan', compact('penyedia','pekerjaan'))->with('pekerjaan', $pekerjaan);
-        return view('admin.showpekerjaan', compact('penyedia','pekerjaan','totalAvg'));
+        return view('admin.showpekerjaan', compact('penyedia','pekerjaan','totalAvg','jeniskerja'));
+    }
+
+    public function showjenispekerjaan(Jeniskerja $jeniskerja){
+        //$pekerjaan = Penyedia::with('pekerjaans')->where('id',$penyedia->id)->get();
+        $pekerjaan = $jeniskerja->pekerjaans;
+
+        $totalAvg=$jeniskerja->pekerjaans()->avg('nilai_total');
+        
+        //return view('admin.showpekerjaan', compact('penyedia','pekerjaan'))->with('pekerjaan', $pekerjaan);
+        return view('admin.showjenispekerjaan', compact('penyedia','pekerjaan','totaljenisAvg'));
     }
 
     public function showpekerjaanppk(){
@@ -244,13 +275,14 @@ class AdminController extends Controller
     public function nilaipekerjaan($id){
         $pekerjaan = Pekerjaan::find($id);
         $penyedia = Penyedia::find($id);
+        $personil = Personil::find($id);
         
         if (is_null($pekerjaan->bahp) || $pekerjaan->status=='Surat Pemutusan Kontrak Karena Kesalahan Penyedia'){
             return redirect()->back();
         }else{
             
 
-            return view('admin.nilaipekerjaan', compact('pekerjaan','penyedia'));
+            return view('admin.nilaipekerjaan', compact('pekerjaan','penyedia','personil'));
         }
         // $pekerjaan = Pekerjaan::find($id);
         // $penyedia = Penyedia::find($id);
@@ -297,13 +329,111 @@ class AdminController extends Controller
             $pekerjaan->save();
         }
         
-        return redirect()->back()->with('message','BAHP Pekerjaan Berhasil diupload!');
+        // $personil = Personil::findOrFail($request->personil_id);
+        // $personil->update([
+        //     'status'=>'tersedia'
+        // ]);
+
+        return redirect()->back()->with('message','BAHP Pekerjaan Berhasil diupload! Pekerjaan selesai.');
+        
     }
 
-    public function showpenyedia(Penyedia $penyedia){
-        $pekerjaan = $penyedia->pekerjaans;
+    public function showpenyedia(Penyedia $penyedia, Jeniskerja $jeniskerja){
+        //$id = request('id');
+        $pekerjaan = $penyedia->pekerjaans; //show pekerjaan(work) based on penyedia(vendor)
+        //$pekerjaan = $penyedia->pekerjaans()->where('jeniskerja_id', $id)->get();
+        //$totalAvgPenyedia=$jeniskerja->pekerjaans()->where('penyedia_id', $penyedia->id)->avg('nilai_total');
         
-        return view('admin.showpenyedia', compact('penyedia','pekerjaan'));
+        $jeniskerja = Jeniskerja::all();
+        
+        return view('admin.showpenyedia', compact('penyedia','pekerjaan','jeniskerja'));
+    }
+
+    public function tabelpersonil(){
+        $personil = Personil::all();
+
+        return view('admin.datapersonil', compact('personil'));
+    }
+
+    public function personilbaru(){
+       
+        return view('admin.addpersonil');
+    }
+
+    public function personilbarucheck(Request $request){
+        if($request->get('nama')){
+            $nama = $request->get('nama');
+            $data = DB::table("personils")
+             ->where('nama', $nama)
+             ->count();
+            if($data > 0)
+            {
+                return response()->json(['message' => 'not_unique']);
+            }
+            else
+            {
+                return response()->json(['message' => 'unique']);
+            }
+        }
+    }
+
+    public function insertpersonil(Request $request){
+        //code here
+        Personil::create($request->all());
+        
+        // $validatedData = $request->validate([
+        //     'nama' => ['required', 'unique:personils', 'max:255'],
+        // ]); <-Validation rule unique
+
+         return redirect()->route('datapersonil')->with('message','Personil Baru Berhasil ditambahkan!');
+    }
+
+    public function deletepersonil($id){
+        $personil = Personil::find($id);
+        $personil->delete();
+
+        return redirect()->route('datapersonil')->with('message','Personil Telah dihapus!');
+    }
+
+    public function editpersonil($id){
+        $personil = Personil::find($id);
+        
+        return view('admin.editpersonil', compact('personil'));
+    }
+
+    public function updatepersonil(Request $request, $id){
+        $personil = Personil::find($id);
+        $personil->update($request->all());
+        
+        return redirect()->route('datapersonil')->with('message','personil Berhasil diupdate!');
+    }
+
+    public function tambahpersonil($id){
+        $pekerjaan = Pekerjaan::find($id);
+        $penyedia = Penyedia::find($id);
+        $personil = Personil::all();
+
+        return view('admin.personilpekerjaan', compact('pekerjaan','penyedia','personil'));
+    }
+
+    public function update_personilpekerjaan(Request $request, $id){    
+        $personil = Personil::findOrFail($request->personil_id);   
+  
+        if($personil->status == 'tersedia'){
+			$pekerjaan = Pekerjaan::findOrFail($id);
+
+			$pekerjaan->update([
+				'personil_id' => $personil->id,
+			]);
+			
+            $personil->update([
+				'status' => 'tdkTersedia'
+			]);
+
+            return redirect()->route('datapekerjaan')->with('message','Personil Pekerjaan Berhasil diupdate!');          
+        }else{
+            return redirect()->back();
+        }   
     }
 
     public function download($id)

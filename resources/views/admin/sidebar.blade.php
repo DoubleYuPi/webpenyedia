@@ -25,7 +25,7 @@
             </p>
           </a>
         </li>
-        <li class="nav-item {{ request()->is('datapenyedia', 'datapekerjaan') ? 'menu-open' : ''}}">
+        <li class="nav-item {{ request()->is('datapenyedia', 'datapekerjaan', 'datapersonil') ? 'menu-open' : ''}}">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-table"></i>
             <p>
@@ -47,6 +47,12 @@
               <a href="{{url('datapekerjaan')}}" class="nav-link {{ request()->is('datapekerjaan') ? 'active' : ''}}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Tabel Pekerjaan</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{url('datapersonil')}}" class="nav-link {{ request()->is('datapersonil') ? 'active' : ''}}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Data Personil</p>
               </a>
             </li>
           </ul>

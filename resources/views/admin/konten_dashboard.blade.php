@@ -135,7 +135,7 @@
                           <tr>
                             <td>{{$no++}}</td>
                             <td>{{$penyedias->nama}}</td>
-                            <td>{{$penyedias->pekerjaans_avg_nilai_total}}</td>
+                            <td>{{round($penyedias->pekerjaans()->avg('nilai_total'),1)}}</td>
                           </tr>
                           @endforeach
                         </tbody>

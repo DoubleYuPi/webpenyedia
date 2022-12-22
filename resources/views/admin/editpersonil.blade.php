@@ -47,7 +47,7 @@
     </a>
 
     <!-- Sidebar -->
-    @include('admin.sidebar')
+    @include('../admin.sidebar')
     
   </aside>
 
@@ -57,14 +57,14 @@
  <div class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
-      <div id="tahun" class="col-sm-6">
-        <h1 class="m-0">Profil Penyedia</h1>
+      <div class="col-sm-6">
+        <h1 class="m-0">Edit Data Personil</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item">Tabel Penyedia</li>
-          <li class="breadcrumb-item active">Profil Penyedia</li>
+          <li class="breadcrumb-item">Manage Data</li>
+          <li class="breadcrumb-item active">Edit Data Personil</li>
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
@@ -72,15 +72,15 @@
 </div>
 <!-- /.content-header -->
 
-  @include('admin.detailpenyedia')
+  @include('../admin.form_editpersonil')
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    <strong>Copyright &copy; 2022 <a href="">UKPBJ</a>.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.2.0
+      
     </div>
   </footer>
 
@@ -133,6 +133,9 @@
 <script src="../admin/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="../admin/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="../admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- InputMask -->
+<script src="../admin/plugins/moment/moment.min.js"></script>
+<script src="../admin/plugins/inputmask/jquery.inputmask.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../admin/dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes 
@@ -141,7 +144,7 @@
 <script src="../admin/dist/js/pages/dashboard.js"></script>
 <script>
   $(function () {
-    $('table.display').DataTable({
+    $('#tabelpenyedia').DataTable({
       "paging": true,
       "lengthChange": true,
       "searching": true,
@@ -149,34 +152,10 @@
       "info": true,
       "autoWidth": true,
       "responsive": true,
-
-      initComplete: function(){
-        this.api()
-            .columns([0])
-            .every(function(){
-              var column = this;
-              var select = $('<select><option value="">Semua</option></select>')
-                  .appendTo($(column.header()))
-                  .on('change',function(){
-                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
- 
-                            column.search(val ? '^' + val + '$' : '', true, false).draw();
-                  });
-
-                  column
-                    .data()
-                    .unique()
-                    .sort()
-                    .each(function(d,j){
-                      select.append('<option value="' + d + '">' + d + '</option>');
-                    });
-
-                    $( select ).click( function(e) {
-                 e.stopPropagation();
-           });
-            });
-      }
     });
+
+    //Money Euro
+    $('[data-mask]').inputmask()
   });
 </script>
 </body>

@@ -13,18 +13,18 @@
                     <thead>
                       <tr>
                         <th style="width: 10px">No.</th>
-                        <th>Nama Penyedia</th>
+                        <th>Jenis Pekerjaan</th>
                         <th>Nilai</th>
                         <th style="width: 120px">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
                       @php $no = 1; @endphp
-                      @foreach ($penyedia as $penyedias)
+                      @foreach ($jeniskerja as $jeniskerjas)
                       <tr>
                         <td>{{$no++}}</td>
-                        <td>{{$penyedias->nama}}</td>
-                        <td>{{round($penyedias->pekerjaans()->avg('nilai_total'),1)}}</td>
+                        <td>{{$jeniskerjas->nama_jenis}}</td>
+                        <td>{{$jeniskerjas->pekerjaans_avg_nilai_total}}</td>
                         <td>
                             <a href="/nilaipekerjaan/{{$penyedias->id}}" type="button" class="btn btn-primary btn-block btn-outline-primary">Detail</a>
                         </td>

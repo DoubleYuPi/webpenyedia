@@ -11,6 +11,18 @@
                 @csrf
                 <div class="card-body">
                   <div class="form-group">
+                    <label for="exampleInputPassword1">Tahun Anggaran</label>
+                    <select name="ta" class="form-control select2bs4" style="width: 15%;">
+                      <option value="" disabled  selected>T.A.</option>
+                      <option>
+                        {{now()->format('Y')}}
+                      </option>
+                      <option>
+                        {{now()->addYear()->format('Y')}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="form-group">
                     <label for="exampleInputEmail1">Paket Pekerjaan</label>
                     <input type="text" name="pekerjaan" class="form-control" id="exampleInputEmail1" placeholder="Pekerjaan" value="{{$pekerjaan->pekerjaan}}">
                   </div>
@@ -35,23 +47,22 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Nama Perusahaan</label>
-                    <select name="penyedia_id" class="form-control select2bs4" style="width: 100%;">
+                    <select name="penyedia_id" class="form-control select2bs4" style="width: 100%;" value="{{$pekerjaan->penyedia_id}}">
                       @foreach ($penyedia as $penyedias)
-                        <option value="{{$penyedias->id}}">
-                          {{$penyedias->nama}}
+                        <option value="{{$pekerjaan->penyedia->id}}">
+                          {{$pekerjaan->penyedia->nama}}
                         </option>
                     @endforeach
                     </select>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Jenis Pekerjaan</label>
-                    <select name="jenis_pekerjaan" class="form-control select2bs4" style="width: 100%;">
-                      <option value="" disabled  selected>Jenis Pekerjaan</option>
-                      <option>Barang</option>
-                      <option>Pekerjaan Konstruksi</option>
-                      <option>Jasa Konsultansi (Konstruksi)</option>
-                      <option>Jasa Konsultansi (Non Konstruksi)</option>
-                      <option>Jasa Lainnya</option>
+                    <select name="jeniskerja_id" class="form-control select2bs4" style="width: 100%;" value="{{$pekerjaan->jeniskerja_id}}">
+                      @foreach ($jeniskerja as $jeniskerjas)
+                      <option value="{{$pekerjaan->jeniskerja->id}}">
+                        {{$pekerjaan->jeniskerja->nama_jenis}}
+                      </option>
+                      @endforeach
                     </select>
                   </div>
                   <div class="form-group">

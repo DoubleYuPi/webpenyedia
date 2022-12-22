@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class Penyedia extends Eloquent
+class Personil extends Eloquent
 {
     use HasFactory;
 
@@ -14,11 +14,11 @@ class Penyedia extends Eloquent
     public $timestamps = false;
 
     public function pekerjaans(){
-       return $this->hasMany(Pekerjaan::class);
+       return $this->hasOne(Pekerjaan::class);
    }
 
-//    public function jeniskerjas(){
-//     return $this->hasMany(Jeniskerja::class);
+//    public function penyedia(){
+//     return $this->belongsTo(Penyedia::class, 'penyedia_id');
 // }
 
 //    public function getAverage(){

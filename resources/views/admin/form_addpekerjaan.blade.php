@@ -11,6 +11,18 @@
                 @csrf
               <div class="card-body">
                 <div class="form-group">
+                  <label for="exampleInputPassword1">Tahun Anggaran</label>
+                  <select name="ta" class="form-control select2bs4" style="width: 15%;">
+                    <option value="" disabled  selected>T.A.</option>
+                    <option>
+                      {{now()->format('Y')}}
+                    </option>
+                    <option>
+                      {{now()->addYear()->format('Y')}}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group">
                   <label for="exampleInputEmail1">Paket Pekerjaan</label>
                   <input type="text" name="pekerjaan" class="form-control" id="exampleInputEmail1" placeholder="Pekerjaan">
                 </div>
@@ -61,13 +73,13 @@
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Jenis Pekerjaan</label>
-                  <select name="jenis_pekerjaan" class="form-control select2bs4" style="width: 100%;">
+                  <select name="jeniskerja_id" class="form-control select2bs4" style="width: 100%;">
                     <option value="" disabled  selected>Jenis Pekerjaan</option>
-                    <option>Barang</option>
-                    <option>Pekerjaan Konstruksi</option>
-                    <option>Jasa Konsultansi (Konstruksi)</option>
-                    <option>Jasa Konsultansi (Non Konstruksi)</option>
-                    <option>Jasa Lainnya</option>
+                    @foreach ($jeniskerja as $jeniskerjas)
+                    <option value="{{$jeniskerjas->id}}">
+                      {{$jeniskerjas->nama_jenis}}
+                    </option>
+                    @endforeach
                   </select>
                 </div>
                 <div class="form-group">

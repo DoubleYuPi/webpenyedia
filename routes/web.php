@@ -9,6 +9,10 @@ use App\Http\Controllers\AdminController;
 use App\Models\Penyedia;
 
 use App\Models\Pekerjaan;
+
+use App\Models\Jeniskerja;
+
+use App\Models\Personil;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -69,6 +73,8 @@ Route::get('/deleteuser/{id}',[AdminController::class,'deleteuser']);
 
 Route::get('/datanilai_penyedia',[AdminController::class,'tabelnilai_penyedia'])->name('datanilai_penyedia');
 
+Route::get('/datanilai_jeniskerja/{penyedia}',[AdminController::class,'tabelnilai_jeniskerja'])->name('datanilai_jeniskerja');
+
 Route::get('/nilaipekerjaan/{penyedia}',[AdminController::class,'showpekerjaan'])->name('showpekerjaan');
 
 Route::get('/nilaipekerjaan',[AdminController::class,'showpekerjaanppk'])->name('showpekerjaanppk');
@@ -84,6 +90,24 @@ Route::post('/updatebahppekerjaan/{id}',[AdminController::class,'update_bahppeke
 Route::get('pekerjaans/{id}/download',[AdminController::class,'download'])->name('pekerjaans.download');
 
 Route::get('/profilpenyedia/{penyedia}',[AdminController::class,'showpenyedia'])->name('showpenyedia');
+
+Route::get('/datapersonil',[AdminController::class,'tabelpersonil'])->name('datapersonil');
+
+Route::get('/personilbaru',[AdminController::class,'personilbaru']);
+
+Route::post('/personilbaru/personilbarucheck',[AdminController::class,'personilbarucheck'])->name('personilbarucheck');
+
+Route::post('/insertpersonil',[AdminController::class,'insertpersonil']);
+
+Route::get('/editpersonil/{id}',[AdminController::class,'editpersonil']);
+
+Route::post('/updatepersonil/{id}',[AdminController::class,'updatepersonil']);
+
+Route::get('/deletepersonil/{id}',[AdminController::class,'deletepersonil']);
+
+Route::get('/tambahpersonil/{id}',[AdminController::class,'tambahpersonil']);
+
+Route::post('/updatepersonilpekerjaan/{id}',[AdminController::class,'update_personilpekerjaan']);
 
 /*Route::get('/penyedias/{penyedia}', function (Penyedia $penyedia) {
     return view('admin.test', [

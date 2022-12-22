@@ -34,10 +34,6 @@
   <link rel="stylesheet" href="admin/plugins/toastr/toastr.min.css">
   <!--SweetAlert-->
   <link rel="stylesheet" href="admin/package/dist/sweetalert2.min.css">
-  <!--Select2-->
-  <!-- Select2 -->
-  <link rel="stylesheet" href="admin/plugins/select2/css/select2.min.css">
-  <link rel="stylesheet" href="admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -66,13 +62,12 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Tabel Pekerjaan</h1>
+        <h1 class="m-0">Tabel Penilaian Penyedia</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item">Manage Data</li>
-          <li class="breadcrumb-item active">Tabel Pekerjaan</li>
+          <li class="breadcrumb-item">Tabel Penilaian</li>
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
@@ -80,7 +75,7 @@
 </div>
 <!-- /.content-header -->
 
-  @include('admin.tabelpekerjaan')
+  @include('admin.tabelnilai_jeniskerja')
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -153,11 +148,8 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="admin/package/dist/sweetalert2.min.js"></script>
 <script>
-  
   $(function () {
-    // let pekerjaan = $("#filter-tahun").val();
-    
-    $('#tabelpekerjaan').DataTable({
+    $('#tabelpenyedia').DataTable({
       "paging": true,
       "lengthChange": true,
       "searching": true,
@@ -165,47 +157,7 @@
       "info": true,
       "autoWidth": true,
       "responsive": true,
-      scrollX: true,
-      // "ajax":{
-      //   url: "{{url('')}}/datapekerjaan",
-      //   type:"POST",
-      //   data:function(d){
-      //     d.pekerjaan = pekerjaan;
-      //     return d
-      //   }
-      // }
-      initComplete: function(){
-        this.api()
-            .columns([0])
-            .every(function(){
-              var column = this;
-              var select = $('<select><option value="">Semua</option></select>')
-                  .appendTo('#tahun')
-                  .on('change',function(){
-                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
- 
-                            column.search(val ? '^' + val + '$' : '', true, false).draw();
-                  });
-
-                  column
-                    .data()
-                    .unique()
-                    .sort()
-                    .each(function(d,j){
-                      select.append('<option value="' + d + '">' + d + '</option>');
-                    });
-
-                    $( select ).click( function(e) {
-                 e.stopPropagation();
-           });
-            });
-      }
     });
-
-    //Initialize Select2 Elements
-    $('.select2bs4').select2({
-      theme: 'bootstrap4'
-    })
   });
 
   
@@ -214,12 +166,12 @@
   @endif
 
   $('.delete').click(function(){
-    var idpekerjaan = $(this).attr('data-id');
-    var namapekerjaan = $(this).attr('data-nama');
+    var idpenyedia = $(this).attr('data-id');
+    var namapenyedia = $(this).attr('data-nama');
 
     Swal.fire({
   title: 'Apakah Anda yakin?',
-  text: "Paket Pekerjaan "+namapekerjaan+" akan dihapus!",
+  text: "Data "+namapenyedia+" akan dihapus!",
   icon: 'warning',
   showCancelButton: true,
   confirmButtonColor: '#3085d6',
@@ -227,7 +179,7 @@
   confirmButtonText: 'Ya, yakin!'
 }).then((result) => {
   if (result.isConfirmed) {
-    window.location = "/deletepekerjaan/"+idpekerjaan+""
+    window.location = "/deletepenyedia/"+idpenyedia+""
     Swal.fire(
       'Dihapus!',
       'Data berhasil dihapus.',
@@ -236,11 +188,6 @@
   }
 });
   });
-
-  // $(".filter").on('change',function(){
-  //   pekerjaan = $("#filter-tahun").val()
-  //   table.ajax.reload(null,false)
-  // })
 </script>
 </body>
 </html>

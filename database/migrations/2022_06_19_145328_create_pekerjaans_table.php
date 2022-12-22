@@ -16,9 +16,11 @@ return new class extends Migration
         Schema::create('pekerjaans', function (Blueprint $table) {
             $table->id();
             $table->string('pekerjaan');
+            $table->integer('ta');
             $table->date('tanggal');
             $table->string('lokasi');
-            $table->string('jenis_pekerjaan');
+            $table->foreignId('personil_id');
+            $table->foreignid('jeniskerja_id');
             $table->float('hps');
             $table->float('nilai_kontrak');
             $table->float('lati');

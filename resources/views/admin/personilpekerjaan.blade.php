@@ -30,6 +30,13 @@
   <link rel="stylesheet" href="../admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="../admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="../admin/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="../admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+   <!--Toastr-->
+   <link rel="stylesheet" href="../admin/plugins/toastr/toastr.min.css">
+   <!--SweetAlert-->
+  <link rel="stylesheet" href="admin/package/dist/sweetalert2.min.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -47,40 +54,40 @@
     </a>
 
     <!-- Sidebar -->
-    @include('admin.sidebar')
+    @include('../admin.sidebar')
     
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
      <!-- Content Header (Page header) -->
- <div class="content-header">
-  <div class="container-fluid">
-    <div class="row mb-2">
-      <div id="tahun" class="col-sm-6">
-        <h1 class="m-0">Profil Penyedia</h1>
-      </div><!-- /.col -->
-      <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item">Tabel Penyedia</li>
-          <li class="breadcrumb-item active">Profil Penyedia</li>
-        </ol>
-      </div><!-- /.col -->
-    </div><!-- /.row -->
-  </div><!-- /.container-fluid -->
-</div>
+     <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Personil Pekerjaan</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item">Manage Data</li>
+              <li class="breadcrumb-item">Tabel Pekerjaan</li>
+              <li class="breadcrumb-item active">Personil Pekerjaan</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
 <!-- /.content-header -->
-
-  @include('admin.detailpenyedia')
+  @include('../admin.form_personilpekerjaan')
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    <strong>Copyright &copy; 2022 <a href="">UKPBJ</a>.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.2.0
+      
     </div>
   </footer>
 
@@ -139,9 +146,16 @@
 <script src="../admin/dist/js/demo.js"></script> -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../admin/dist/js/pages/dashboard.js"></script>
+<!-- Select2 -->
+<script src="../admin/plugins/select2/js/select2.full.min.js"></script>
+<!-- Toastr -->
+<script src="../admin/plugins/toastr/toastr.min.js"></script>
+<!--SweetAlert-->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="admin/package/dist/sweetalert2.min.js"></script>
 <script>
   $(function () {
-    $('table.display').DataTable({
+    $('#tabelpekerjaan').DataTable({
       "paging": true,
       "lengthChange": true,
       "searching": true,
@@ -149,34 +163,41 @@
       "info": true,
       "autoWidth": true,
       "responsive": true,
-
-      initComplete: function(){
-        this.api()
-            .columns([0])
-            .every(function(){
-              var column = this;
-              var select = $('<select><option value="">Semua</option></select>')
-                  .appendTo($(column.header()))
-                  .on('change',function(){
-                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
- 
-                            column.search(val ? '^' + val + '$' : '', true, false).draw();
-                  });
-
-                  column
-                    .data()
-                    .unique()
-                    .sort()
-                    .each(function(d,j){
-                      select.append('<option value="' + d + '">' + d + '</option>');
-                    });
-
-                    $( select ).click( function(e) {
-                 e.stopPropagation();
-           });
-            });
-      }
     });
+
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    });
+  });
+
+  @if (session()->has('message'))
+    toastr.success("{{session()->get('message')}}")  
+  @endif
+
+  $('.nilai').click(function(){
+    var idpekerjaan = $(this).attr('data-id');
+    var namapekerjaan = $(this).attr('data-nama');
+    var form = $(this).parents('form');
+
+    Swal.fire({
+  title: 'Apakah Anda yakin?',
+  text: "Personil baru akan ditambahkan untuk Pekerjaan "+namapekerjaan+"",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Ya, yakin!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location = "/tambahpersonil/"+idpekerjaan+""
+    form.submit();
+    Swal.fire(
+      'Berhasil!',
+      'Personil berhasil ditambahkan.',
+      'success'
+    )
+  }
+});
   });
 </script>
 </body>

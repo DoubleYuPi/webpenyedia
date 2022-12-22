@@ -17,8 +17,18 @@ class Pekerjaan extends Eloquent
         return $this->belongsTo(Penyedia::class, 'penyedia_id');
    }
 
+   public function jeniskerja(){
+    return $this->belongsTo(Jeniskerja::class, 'jeniskerja_id');
+   }
+
+   public function personil(){
+    return $this->belongsTo(Personil::class, 'personil_id');
+   }
+
    public function user(){
     return $this->belongsTo(User::class, 'user_id');
 }
+
+
 
 }

@@ -208,7 +208,7 @@
                     <tr class="flex w-full mb-4">
                     <td class="py-3 px-6 w-10p">{{$no++}}</td>
                     <td class="py-3 px-6 w-45p">{{$penyedias->nama}}</td>
-                    <td class="py-3 px-6 w-45p">{{$penyedias->pekerjaans_avg_nilai_total}}</td>
+                    <td class="py-3 px-6 w-45p">{{round($penyedias->pekerjaans()->avg('nilai_total'),1)}}</td>
                     </tr>
 
                     @endforeach
@@ -238,8 +238,8 @@
           <h5>Kontak Kami</h5>
           <p>Jalan Rahadi Usman No.3 Kota Pontianak<br>Kalimantan Barat, Indonesia</p>
 
-          <p><a href="#" >blp@pontianakkota.go.id</a></p>
-          <p><a href="#">+00 1122 3344 5566</a></p>
+          <p><a href="mailto: blp@pontianak.go.id" >blp@pontianakkota.go.id</a></p>
+          <p><a href="https://wa.me/628115675076" target="_blank" rel="noopener noreferrer">+62 811-5675-076</a></p>
         </div>
         <div class="col-lg-3 py-3">
           <h5>Media Sosial</h5>

@@ -7,7 +7,7 @@
                   @if (Auth::user()->status=='super')
                   <h3 class="card-title"><b>{{$penyedia->nama}}</b></h3> <br>
                
-                  <h3 class="card-title">Nilai Total: <b>{{$totalAvg}}</b></h3> 
+                  <h3 class="card-title">Nilai Total: <b>{{round(($totalAvg),1)}}</b></h3> 
                   @else
                   <h3 class="card-title"><b></b></h3> <br>
                
@@ -22,7 +22,8 @@
                         <th rowspan="2">Tanggal Kontrak</th>
                         <th rowspan="2">Paket Pekerjaan</th>
                         <th rowspan="2">Nama Perusahaan</th>
-                        <th rowspan="2">Lokasi Pekerjaan</th>
+                        <th rowspan="2">Personil Manajerial</th>
+                        <th rowspan="2">Jenis Pekerjaan</th>
                         <th rowspan="2">HPS</th>
                         <th rowspan="2">Nilai</th>
                         <th rowspan="2">Dokumen</th>
@@ -38,11 +39,12 @@
                       @php $no = 1; /*$totalNilai = 0.0;*/ @endphp
                       @foreach ($pekerjaan as $pekerjaans)
                       <tr>
-                        <td>{{$pekerjaans->tanggal->format('Y')}}</td>
+                        <td>{{$pekerjaans->ta}}</td>
                         <td>{{$pekerjaans->tanggal->format('d/m/Y')}}</td>
                         <td>{{$pekerjaans->pekerjaan}}</td>
                         <td>{{$pekerjaans->penyedia->nama}}</td>
-                        <td>{{$pekerjaans->lokasi}}</td>
+                        <td>{{$pekerjaans->personil->nama ?? ''}}</td>
+                        <td>{{$pekerjaans->jeniskerja->nama_jenis}}</td>
                         <td>Rp. {{number_format($pekerjaans->hps,0,',',',')}}</td>
                         @php
                         $pekerjaans->nilai_total = $pekerjaans->nilai_1 + $pekerjaans->nilai_2 + $pekerjaans->nilai_3 + $pekerjaans->nilai_4;

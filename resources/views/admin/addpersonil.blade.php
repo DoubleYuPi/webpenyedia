@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
   <link rel="icon" href="admin/dist/img/logomandor.jpeg">
   <title>SI-MANDOR</title>
 
@@ -30,6 +31,11 @@
   <link rel="stylesheet" href="../admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="../admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="../admin/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="../admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <!--AJAX-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -47,7 +53,7 @@
     </a>
 
     <!-- Sidebar -->
-    @include('admin.sidebar')
+    @include('../admin.sidebar')
     
   </aside>
 
@@ -57,14 +63,14 @@
  <div class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
-      <div id="tahun" class="col-sm-6">
-        <h1 class="m-0">Profil Penyedia</h1>
+      <div class="col-sm-6">
+        <h1 class="m-0">Tambah Data Personil</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item">Tabel Penyedia</li>
-          <li class="breadcrumb-item active">Profil Penyedia</li>
+          <li class="breadcrumb-item">Manage Data</li>
+          <li class="breadcrumb-item active">Tambah Data Personil</li>
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
@@ -72,15 +78,15 @@
 </div>
 <!-- /.content-header -->
 
-  @include('admin.detailpenyedia')
+  @include('../admin.form_addpersonil')
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    <strong>Copyright &copy; 2022 <a href="">UKPBJ/a>.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.2.0
+      
     </div>
   </footer>
 
@@ -139,9 +145,14 @@
 <script src="../admin/dist/js/demo.js"></script> -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../admin/dist/js/pages/dashboard.js"></script>
+<!-- Select2 -->
+<script src="../admin/plugins/select2/js/select2.full.min.js"></script>
+<!-- InputMask -->
+<script src="../admin/plugins/moment/moment.min.js"></script>
+<script src="../admin/plugins/inputmask/jquery.inputmask.min.js"></script>
 <script>
   $(function () {
-    $('table.display').DataTable({
+    $('#tabelpenyedia').DataTable({
       "paging": true,
       "lengthChange": true,
       "searching": true,
@@ -149,33 +160,50 @@
       "info": true,
       "autoWidth": true,
       "responsive": true,
+    });
 
-      initComplete: function(){
-        this.api()
-            .columns([0])
-            .every(function(){
-              var column = this;
-              var select = $('<select><option value="">Semua</option></select>')
-                  .appendTo($(column.header()))
-                  .on('change',function(){
-                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
- 
-                            column.search(val ? '^' + val + '$' : '', true, false).draw();
-                  });
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    });
 
-                  column
-                    .data()
-                    .unique()
-                    .sort()
-                    .each(function(d,j){
-                      select.append('<option value="' + d + '">' + d + '</option>');
-                    });
+    //Date picker
+    $('#reservationdate').datetimepicker({
+        format: 'YYYY-MM-DD'
+    });
 
-                    $( select ).click( function(e) {
-                 e.stopPropagation();
-           });
-            });
-      }
+    $('[data-mask]').inputmask();
+
+    $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      }); 
+
+    $('#nama').blur(function(){
+      var error_nama = '';
+      var nama = $('#nama').val();
+      var _token = $('input[name="_token"]').val();
+      $.ajax({
+        url:'/personilbaru/personilbarucheck',
+        method:'POST',
+        data:{nama:nama, _token:_token},
+        success:function(result)
+        {
+          console.log(result.message)
+          if(result.message == 'unique')
+          {
+            $('#error_nama').html('<label class="text-success">Success</label>');
+            $('#nama').removeClass('has-error');
+            $('#submit').attr('disabled', false);
+          }
+          else
+          {
+            $('#error_nama').html('<label class="text-danger">Nama sudah terdaftar di dalam sistem! Mohon input nama baru!</label>');
+            $('#nama').addClass('has-error');
+            $('#submit').attr('disabled', 'disabled');
+          }
+        }
+      })
     });
   });
 </script>
