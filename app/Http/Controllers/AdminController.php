@@ -329,10 +329,12 @@ class AdminController extends Controller
             $pekerjaan->save();
         }
         
-        // $personil = Personil::findOrFail($request->personil_id);
-        // $personil->update([
-        //     'status'=>'tersedia'
-        // ]);
+        $personil = Personil::findOrFail($request->personil_id);
+        $personil->update([
+            'status'=>'tersedia'
+        ]);
+
+        Log::debug($request->personil_id);
 
         return redirect()->back()->with('message','BAHP Pekerjaan Berhasil diupload! Pekerjaan selesai.');
         
