@@ -45,7 +45,7 @@
                         <td>{{$pekerjaans->ta}}</td>
                         <td>{{$pekerjaans->pekerjaan}}</td>
                         <td>{{$pekerjaans->tanggal->format('d/m/Y')}}</td>
-                        <td>{{$pekerjaans->penyedia->nama}}</td>
+                        <td><a href="/profilpenyedia/{{$pekerjaans->penyedia->id}}">{{$pekerjaans->penyedia->nama}}</a></td>
                         <td>{{$pekerjaans->jeniskerja->nama_jenis}}</td>
                         <td>{{$pekerjaans->lokasi}}</td>
                         {{-- <td>{{$pekerjaans->user->name}}</td> --}}

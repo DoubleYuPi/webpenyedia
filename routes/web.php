@@ -39,6 +39,8 @@ Route::get('/datapenyedia',[AdminController::class,'tabelpenyedia'])->name('data
 
 Route::get('/tambahpenyedia',[AdminController::class,'tambahpenyedia']);
 
+Route::post('/penyediabaru/penyediabarucheck',[AdminController::class,'penyediabarucheck'])->name('penyediabarucheck');
+
 Route::post('/insertpenyedia',[AdminController::class,'insertpenyedia']);
 
 Route::get('/editpenyedia/{id}',[AdminController::class,'editpenyedia']);

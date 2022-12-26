@@ -48,6 +48,23 @@ class AdminController extends Controller
         return view('admin.addpenyedia');
     }
 
+    public function penyediabarucheck(Request $request){
+        if($request->get('nama')){
+            $nama = $request->get('nama');
+            $data = DB::table("penyedias")
+             ->where('nama', $nama)
+             ->count();
+            if($data > 0)
+            {
+                return response()->json(['message' => 'not_unique']);
+            }
+            else
+            {
+                return response()->json(['message' => 'unique']);
+            }
+        }
+    }
+
     public function insertpenyedia(Request $request){
         Penyedia::create($request->all());
 
@@ -321,22 +338,45 @@ class AdminController extends Controller
     }
 
     public function update_bahppekerjaan(Request $request, $id){
-        $pekerjaan = Pekerjaan::find($id);
-        $pekerjaan->update($request->all());
-        if($request->hasFile('bahp')){
-            $request->file('bahp')->move('dokumenpekerjaan/', $request->file('bahp')->getClientOriginalName());
-            $pekerjaan->bahp = $request->file('bahp')->getClientOriginalName();
-            $pekerjaan->save();
-        }
-        
-        $personil = Personil::findOrFail($request->personil_id);
-        $personil->update([
-            'status'=>'tersedia'
-        ]);
+        // $pekerjaan = Pekerjaan::find($id);
+        // $pekerjaan->update($request->all());
+        // if($request->hasFile('bahp')){
+        //     $request->file('bahp')->move('dokumenpekerjaan/', $request->file('bahp')->getClientOriginalName());
+        //     $pekerjaan->bahp = $request->file('bahp')->getClientOriginalName();
+        //     $pekerjaan->save();
+        // }
 
-        Log::debug($request->personil_id);
+        // return redirect()->back()->with('message','BAHP Pekerjaan Berhasil diupload! Pekerjaan selesai.');
 
-        return redirect()->back()->with('message','BAHP Pekerjaan Berhasil diupload! Pekerjaan selesai.');
+        $pekerjaan = Pekerjaan::find($id);   
+  
+        if($pekerjaan->personil->status != "tersedia"){
+			$pekerjaan->update([
+				"status" => $request->status,
+			]);
+
+            if($request->hasFile('bahp')){
+                $request->file('bahp')->move('dokumenpekerjaan/', $request->file('bahp')->getClientOriginalName());
+                $pekerjaan->bahp = $request->file('bahp')->getClientOriginalName();
+                $pekerjaan->save();
+            }
+			
+            $pekerjaan->personil()->update([
+				"status" => "tersedia"
+			]);
+				
+			// if you are creating a new personil relationship
+		
+			$pekerjaan->personil()->create([
+				"status" => "tersedia",
+				//other required fields
+            ]);
+
+            return redirect()->back()->with('message','BAHP Pekerjaan Berhasil diupload! Pekerjaan selesai.');          
+        }else{
+            return redirect()->back();
+        }   
+
         
     }
 

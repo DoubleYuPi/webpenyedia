@@ -26,6 +26,7 @@
                         <th rowspan="2">Jenis Pekerjaan</th>
                         <th rowspan="2">HPS</th>
                         <th rowspan="2">Nilai</th>
+                        <th rowspan="2">Kriteria</th>
                         <th rowspan="2">Dokumen</th>
                         <th colspan="2">Aksi</th>
                       </tr>
@@ -50,6 +51,17 @@
                         $pekerjaans->nilai_total = $pekerjaans->nilai_1 + $pekerjaans->nilai_2 + $pekerjaans->nilai_3 + $pekerjaans->nilai_4;
                         @endphp
                         <td>{{$pekerjaans->nilai_total}}</td>
+                        @if (is_null($pekerjaans->bahp))
+                        <td>N/A</td>
+                        @elseif($pekerjaans->nilai_total == '0' || $pekerjaans->nilai_total <= '1' || $pekerjaans->status=='Surat Pemutusan Kontrak Karena Kesalahan Penyedia')
+                        <td>Buruk</td>
+                        @elseif($pekerjaans->nilai_total == '1' || $pekerjaans->nilai_total <= '2')
+                        <td>Cukup</td>
+                        @elseif($pekerjaans->nilai_total == '2' || $pekerjaans->nilai_total <= '3')
+                        <td>Baik</td>
+                        @elseif($pekerjaans->nilai_total == '3')
+                        <td>Sangat Baik</td>
+                        @endif
                         <td><a href="{{ route('pekerjaans.download', $pekerjaans->id) }}"><u>{{$pekerjaans->status}}</u></a></td>
                         <td>
                           <a href="/bahp/{{$pekerjaans->id}}" type="button" class="btn btn-outline-primary">Upload</a>

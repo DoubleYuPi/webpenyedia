@@ -12,7 +12,8 @@
               <div class="card-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Nama</label>
-                  <input type="text" name="nama" class="form-control" id="exampleInputEmail1" placeholder="Nama Perusahaan">
+                  <input type="text" name="nama" class="form-control" id="nama" placeholder="Nama Perusahaan">
+                  <span id="error_nama"></span>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">NPWP</label>
@@ -45,7 +46,7 @@
 
               <div class="card-footer">
                 <a href="/datapenyedia" type="button" class="btn btn-outline-secondary">Kembali</a>
-                <button type="submit" class="btn btn-outline-primary">Submit</button>
+                <button type="submit" id="submit" class="btn btn-outline-primary">Submit</button>
               </div>
             </form>
           </div>

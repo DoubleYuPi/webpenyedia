@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
   <link rel="icon" href="admin/dist/img/logomandor.jpeg">
   <title>SI-MANDOR</title>
 
@@ -30,6 +31,8 @@
   <link rel="stylesheet" href="admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+   <!--AJAX-->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -156,6 +159,39 @@
 
     //Money Euro
     $('[data-mask]').inputmask()
+
+    $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      }); 
+
+    $('#nama').blur(function(){
+      var error_nama = '';
+      var nama = $('#nama').val();
+      var _token = $('input[name="_token"]').val();
+      $.ajax({
+        url:'/penyediabaru/penyediabarucheck',
+        method:'POST',
+        data:{nama:nama, _token:_token},
+        success:function(result)
+        {
+          console.log(result.message)
+          if(result.message == 'unique')
+          {
+            $('#error_nama').html('<label class="text-success">Success</label>');
+            $('#nama').removeClass('has-error');
+            $('#submit').attr('disabled', false);
+          }
+          else
+          {
+            $('#error_nama').html('<label class="text-danger">Nama sudah terdaftar di dalam sistem! Mohon input nama baru!</label>');
+            $('#nama').addClass('has-error');
+            $('#submit').attr('disabled', 'disabled');
+          }
+        }
+      })
+    });
   });
 </script>
 </body>
