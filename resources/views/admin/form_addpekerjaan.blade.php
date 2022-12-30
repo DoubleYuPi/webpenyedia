@@ -12,7 +12,7 @@
               <div class="card-body">
                 <div class="form-group">
                   <label for="exampleInputPassword1">Tahun Anggaran</label>
-                  <select name="ta" class="form-control select2bs4" style="width: 15%;">
+                  <select name="ta" class="form-control select2bs4" style="width: 15%;" required>
                     <option value="" disabled  selected>T.A.</option>
                     <option>
                       {{now()->format('Y')}}
@@ -84,11 +84,11 @@
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">HPS</label>
-                  <input type="number" step=".01" name="hps" class="form-control" id="exampleInputEmail1" placeholder="Pekerjaan">
+                  <input type="number" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" name="hps" class="form-control" id="exampleInputEmail1" placeholder="Pekerjaan">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Nilai Kontrak</label>
-                  <input type="number" step=".01" name="nilai_kontrak" class="form-control" id="exampleInputEmail1" placeholder="Pekerjaan">
+                  <input type="number" step="0.01" name="nilai_kontrak" class="form-control" id="exampleInputEmail1" placeholder="Pekerjaan">
                 </div>
                 <div class="form-group">
                     <label>Lokasi</label>

@@ -34,6 +34,7 @@
                         <th>HPS</th>
                         <th>Nilai Kontrak</th>
                         <th>Gambar</th>
+                        <th>Status</th>
                         <th style="width: 120px">Aksi</th>
                         <th>Personil</th>
                       </tr>
@@ -54,12 +55,17 @@
                         @else
                           <td>{{$pekerjaans->personil->nama}}</td>
                         @endif --}}
-                        <td><a href="">{{$pekerjaans->personil->nama ?? ''}}</a></td>
+                        <td><a href="">{{$pekerjaans->personil->nama ?? 'N/A'}}</a></td>
                         <td>Rp. {{number_format($pekerjaans->hps,0,',',',')}}</td>
                         <td>Rp. {{number_format($pekerjaans->nilai_kontrak,0,',',',')}}</td>
                         <td>
                           <img src="{{asset('gambarpekerjaan/'.$pekerjaans->gambar)}}" style="width: 100px"alt="">
                         </td>
+                          @if (is_null($pekerjaans->bahp))
+                            <td class="text-warning">Dalam proses pekerjaan</td>
+                          @else
+                            <td class="text-success">Pekerjaan Selesai</td>
+                          @endif
                         <td>
                             @if (Auth::user()->status=='super')
                               <a href="/editpekerjaan/{{$pekerjaans->id}}" type="button" class="btn btn-outline-primary">Edit</a>

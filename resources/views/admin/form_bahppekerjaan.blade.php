@@ -17,10 +17,6 @@
                     <input name="penyedia_id" class="form-control" style="width: 100%;" value="{{$pekerjaan->penyedia->nama}}" disabled>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Nama Personil</label>
-                    <input name="personil_id" class="form-control" style="width: 100%;" value="{{$pekerjaan->personil->nama}}" disabled>
-                  </div>
-                  <div class="form-group">
                       <label>Lokasi</label>
                       <textarea name="lokasi" class="form-control" rows="3" placeholder="Alamat" disabled>{{$pekerjaan->lokasi}}</textarea>
                   </div>

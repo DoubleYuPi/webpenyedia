@@ -38,7 +38,7 @@
                         @if ($personils->status == 'tersedia')
                           <td class="text-success">Tersedia</td>
                         @elseif($personils->status == 'tdkTersedia')
-                          <td>Sedang bekerja pada pekerjaan <b>{{$personils->pekerjaans->pekerjaan}}</b></td>
+                          <td>Sedang bekerja pada pekerjaan <b>{{$personils->pekerjaans->pekerjaan}}</b> PPK: <b>{{$personils->pekerjaans->user->name}}</b> Satker: {{$personils->pekerjaans->user->satker}}</td>
                         @endif
                         
                         <td>

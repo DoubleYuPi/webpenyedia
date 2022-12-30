@@ -44,7 +44,7 @@
                         <td>{{$pekerjaans->tanggal->format('d/m/Y')}}</td>
                         <td>{{$pekerjaans->pekerjaan}}</td>
                         <td>{{$pekerjaans->penyedia->nama}}</td>
-                        <td>{{$pekerjaans->personil->nama ?? ''}}</td>
+                        <td>{{$pekerjaans->personil->nama ?? 'N/A'}}</td>
                         <td>{{$pekerjaans->jeniskerja->nama_jenis}}</td>
                         <td>Rp. {{number_format($pekerjaans->hps,0,',',',')}}</td>
                         @php
@@ -68,7 +68,7 @@
                         </td>
                         <td>
                           {{-- <a href="/nilai/{{$pekerjaans->id}}" type="button" class="btn btn-outline-primary @disabled(is_null($pekerjaans->bahp))">Penilaian</a> --}} <!--SHORT VER-->
-                            @if (is_null($pekerjaans->bahp) || $pekerjaans->status=='Surat Pemutusan Kontrak Karena Kesalahan Penyedia')
+                            @if (is_null($pekerjaans->bahp) || $pekerjaans->status=='Surat Pemutusan Kontrak Karena Kesalahan Penyedia' || $pekerjaans->nilai_total > '0')
                             <a href="/nilai/{{$pekerjaans->id}}" type="button" class="btn btn-outline-secondary disabled">Penilaian</a>
                             @else
                             <a href="/nilai/{{$pekerjaans->id}}" type="button" class="btn btn-outline-primary">Penilaian</a>

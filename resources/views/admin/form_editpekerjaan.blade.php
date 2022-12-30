@@ -13,8 +13,8 @@
                   <div class="form-group">
                     <label for="exampleInputPassword1">Tahun Anggaran</label>
                     <select name="ta" class="form-control select2bs4" style="width: 15%;">
-                      <option value="" disabled  selected>T.A.</option>
-                      <option>
+                      <option value="" disabled >T.A.</option>
+                      <option {{ $pekerjaan->ta == now()->format('Y') ? 'selected':'' }}>
                         {{now()->format('Y')}}
                       </option>
                       <option>
@@ -34,20 +34,35 @@
                               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                           </div>
                       </div>
-                      <div class="form-group">
-                        <label for="exampleInputPassword1">Nama PPK</label>
-                        <select name="user_id" class="form-control select2bs4" style="width: 100%;" value="{{$pekerjaan->user_id}}" disabled> 
-                          @foreach ($user as $users)
-                          <option value="{{$pekerjaan->user->id}}">
-                            {{$pekerjaan->user->name}}
-                          </option>
-                          @endforeach
-                        </select>
-                      </div>
-                  </div>
+                      @if(Auth::user()->status=='super')
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Nama PPK</label>
+                  <select name="user_id" class="form-control select2bs4" style="width: 100%;">
+                    @foreach ($user as $users)
+                    <option value="{{$users->id}}">
+                      {{$users->name}}
+                    </option>
+                    @endforeach
+                    {{-- <option>
+                      {{$users = Auth::user()->username}}
+                    </option> --}}
+                  </select>
+                </div>
+                @elseif (Auth::user()->status=='ppk')
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Nama PPK</label>
+                  <select name="user_id" class="form-control select2bs4" style="width: 100%;">
+                    
+                    <option value="{{Auth::user()->id}}">
+                      {{$users = Auth::user()->name}}
+                    </option>
+                    
+                  </select>
+                </div>
+                @endif
                   <div class="form-group">
                     <label for="exampleInputPassword1">Nama Perusahaan</label>
-                    <select name="penyedia_id" class="form-control select2bs4" style="width: 100%;" value="{{$pekerjaan->penyedia_id}}">
+                    <select name="penyedia_id" class="form-control select2bs4" style="width: 100%;">
                       @foreach ($penyedia as $penyedias)
                         <option value="{{$pekerjaan->penyedia->id}}">
                           {{$pekerjaan->penyedia->nama}}
@@ -57,10 +72,10 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Jenis Pekerjaan</label>
-                    <select name="jeniskerja_id" class="form-control select2bs4" style="width: 100%;" value="{{$pekerjaan->jeniskerja_id}}">
+                    <select name="jeniskerja_id" class="form-control select2bs4" style="width: 100%;">
                       @foreach ($jeniskerja as $jeniskerjas)
-                      <option value="{{$pekerjaan->jeniskerja->id}}">
-                        {{$pekerjaan->jeniskerja->nama_jenis}}
+                      <option value="{{$jeniskerjas->id}}" {{ $pekerjaan->jeniskerja_id == $jeniskerjas->id ? 'selected' : '' }}>
+                        {{$jeniskerjas->nama_jenis}}
                       </option>
                       @endforeach
                     </select>
