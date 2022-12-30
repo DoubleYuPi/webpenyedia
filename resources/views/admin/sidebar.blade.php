@@ -89,6 +89,30 @@
           </a>
         </li>
         @endif
+        <li class="nav-header">REKAP DATA</li>
+        <li class="nav-item {{ request()->is('rekappekerjaan', '') ? 'menu-open' : ''}}">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-table"></i>
+            <p>
+              Rekap 
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{url('')}}" class="nav-link {{ request()->is('') ? 'active' : ''}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Rekap Penyedia</p>
+                </a>
+              </li>
+            <li class="nav-item">
+              <a href="{{url('rekappekerjaan')}}" class="nav-link {{ request()->is('rekappekerjaan') ? 'active' : ''}}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Rekap Pekerjaan</p>
+              </a>
+            </li>
+          </ul>
+        </li>
     </nav>
     <!-- /.sidebar-menu -->
   </div>

@@ -338,44 +338,44 @@ class AdminController extends Controller
     }
 
     public function update_bahppekerjaan(Request $request, $id){
-        // $pekerjaan = Pekerjaan::find($id);
-        // $pekerjaan->update($request->all());
-        // if($request->hasFile('bahp')){
-        //     $request->file('bahp')->move('dokumenpekerjaan/', $request->file('bahp')->getClientOriginalName());
-        //     $pekerjaan->bahp = $request->file('bahp')->getClientOriginalName();
-        //     $pekerjaan->save();
-        // }
+        $pekerjaan = Pekerjaan::find($id);
+        $pekerjaan->update($request->all());
+        if($request->hasFile('bahp')){
+            $request->file('bahp')->move('dokumenpekerjaan/', $request->file('bahp')->getClientOriginalName());
+            $pekerjaan->bahp = $request->file('bahp')->getClientOriginalName();
+            $pekerjaan->save();
+        }
 
-        // return redirect()->back()->with('message','BAHP Pekerjaan Berhasil diupload! Pekerjaan selesai.');
+        return redirect()->back()->with('message','BAHP Pekerjaan Berhasil diupload! Pekerjaan selesai.');
 
-        $pekerjaan = Pekerjaan::find($id);   
+        // $pekerjaan = Pekerjaan::find($id);   
   
-        if($pekerjaan->personil->status != "tersedia"){
-			$pekerjaan->update([
-				"status" => $request->status,
-			]);
+        // if($pekerjaan->personil->status != "tersedia"){
+		// 	$pekerjaan->update([
+		// 		"status" => $request->status,
+		// 	]);
 
-            if($request->hasFile('bahp')){
-                $request->file('bahp')->move('dokumenpekerjaan/', $request->file('bahp')->getClientOriginalName());
-                $pekerjaan->bahp = $request->file('bahp')->getClientOriginalName();
-                $pekerjaan->save();
-            }
+        //     if($request->hasFile('bahp')){
+        //         $request->file('bahp')->move('dokumenpekerjaan/', $request->file('bahp')->getClientOriginalName());
+        //         $pekerjaan->bahp = $request->file('bahp')->getClientOriginalName();
+        //         $pekerjaan->save();
+        //     }
 			
-            $pekerjaan->personil()->update([
-				"status" => "tersedia"
-			]);
+        //     $pekerjaan->personil()->update([
+		// 		"status" => "tersedia"
+		// 	]);
 				
-			// if you are creating a new personil relationship
+		// 	// if you are creating a new personil relationship
 		
-			$pekerjaan->personil()->create([
-				"status" => "tersedia",
-				//other required fields
-            ]);
+		// 	$pekerjaan->personil()->create([
+		// 		"status" => "tersedia",
+		// 		//other required fields
+        //     ]);
 
-            return redirect()->back()->with('message','BAHP Pekerjaan Berhasil diupload! Pekerjaan selesai.');          
-        }else{
-            return redirect()->back();
-        }   
+        //     return redirect()->back()->with('message','BAHP Pekerjaan Berhasil diupload! Pekerjaan selesai.');          
+        // }else{
+        //     return redirect()->back();
+        // }   
 
         
     }
@@ -391,10 +391,10 @@ class AdminController extends Controller
         return view('admin.showpenyedia', compact('penyedia','pekerjaan','jeniskerja'));
     }
 
-    public function tabelpersonil(){
+    public function tabelpersonil(User $user){
         $personil = Personil::all();
 
-        return view('admin.datapersonil', compact('personil'));
+        return view('admin.datapersonil', compact('personil','user'));
     }
 
     public function personilbaru(){
@@ -476,6 +476,11 @@ class AdminController extends Controller
         }else{
             return redirect()->back();
         }   
+    }
+
+    public function rekappekerjaan(){
+            $pekerjaan = Pekerjaan::with('penyedia','user')->paginate(100);
+            return view('admin.rekappekerjaan', compact('pekerjaan'));
     }
 
     public function download($id)

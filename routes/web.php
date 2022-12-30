@@ -111,6 +111,8 @@ Route::get('/tambahpersonil/{id}',[AdminController::class,'tambahpersonil']);
 
 Route::post('/updatepersonilpekerjaan/{id}',[AdminController::class,'update_personilpekerjaan']);
 
+Route::get('/rekappekerjaan',[AdminController::class,'rekappekerjaan']);
+
 /*Route::get('/penyedias/{penyedia}', function (Penyedia $penyedia) {
     return view('admin.test', [
         'pekerjaans' => $penyedia->pekerjaan
