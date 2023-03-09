@@ -488,7 +488,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 .btn-secondary {
   color: #fff;
-  background-color: #645F88;
+  background-color: #645F88 !important;
   border-color: transparent;
 }
 
