@@ -174,6 +174,10 @@
     toastr.success("{{session()->get('message')}}")  
   @endif
 
+  @if (session()->has('warning'))
+    toastr.warning("{{session()->get('warning')}}")  
+  @endif
+
   $('.nilai').click(function(){
     var idpekerjaan = $(this).attr('data-id');
     var namapekerjaan = $(this).attr('data-nama');
