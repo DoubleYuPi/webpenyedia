@@ -36,7 +36,37 @@
 
    <style>
     #mapid { min-height: 500px; width: 500px;}
-  </style>
+
+    table.scrolldown {
+         width: 100%;
+         border-spacing: 0;
+      }
+          
+      table.scrolldown tbody, table.scrolldown thead {
+         display: block;
+      }   
+      thead tr th {
+         height: 50px; 
+         line-height: 60px;
+         text-align:center;
+      }          
+      table.scrolldown tbody {
+         height: 500px; 
+         overflow-y: auto;
+         overflow-x: hidden; 
+      }
+          
+      tbody { 
+
+      }
+          
+      tbody td, thead th {
+         width : 500px;
+      }
+      td {
+         text-align:center;
+      }
+   </style>
 
 </head>
 <body>
@@ -192,8 +222,8 @@
           <h2 class="title-section">Tabel <span class="marked">Data</span> Penyedia</h2>
           <div class="divider mx-auto"></div>
         </div>
-            
-              <table class="table w-full table-borderless">
+             
+              <table class="table w-full table-borderless scrolldown">
                   <thead class="thead-dark text-sm leading-normal">
                       <tr class="flex w-full mb-4">
                           <th class="py-3 px-6 w-10p" style="font-size:25px">No.</th>
@@ -201,7 +231,7 @@
                           <th class="py-3 px-6 w-45p" style="font-size:25px">Valuasi</th>
                       </tr>
                   </thead>
-                  <tbody class="bg-grey-light flex flex-col items-center justify-between" style="height: 50vh; overflow-y-scroll; w-full;">
+                  <tbody class="bg-grey-light flex flex-col items-center justify-between">
                     @php $no = 1; @endphp
                     @foreach ($penyedia as $penyedias)
                     {{-- ->sortByDesc('jumlah_paket') --}}
