@@ -89,6 +89,7 @@
           </a>
         </li>
         @endif
+        @if (Auth::user()->status=='super')
         <li class="nav-header">REKAP DATA</li>
         <li class="nav-item {{ request()->is('rekappekerjaan', '') ? 'menu-open' : ''}}">
           <a href="#" class="nav-link">
@@ -113,6 +114,7 @@
             </li>
           </ul>
         </li>
+        @endif
     </nav>
     <!-- /.sidebar-menu -->
   </div>
