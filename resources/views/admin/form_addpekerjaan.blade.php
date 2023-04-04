@@ -15,6 +15,9 @@
                   <select name="ta" class="form-control select2bs4" style="width: 15%;" required>
                     <option value="" disabled  selected>T.A.</option>
                     <option>
+                      {{now()->subYear(1)->format('Y')}}
+                    </option>
+                    <option>
                       {{now()->format('Y')}}
                     </option>
                     <option>
