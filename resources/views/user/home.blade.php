@@ -232,13 +232,18 @@
                       </tr>
                   </thead>
                   <tbody class="bg-grey-light flex flex-col items-center justify-between">
-                    @php $no = 1; @endphp
+                    @php 
+                    $no = 1; 
+                    $penyedia = App\Models\Penyedia::withCount(['pekerjaans as nilai_total_avg' => function ($query) {
+                    $query->select(DB::raw('ROUND(AVG(nilai_total), 1)'));
+                    }])->orderByDesc('nilai_total_avg')->take(10)->get();
+                    @endphp
                     @foreach ($penyedia as $penyedias)
                     {{-- ->sortByDesc('jumlah_paket') --}}
                     <tr class="flex w-full mb-4">
                     <td class="py-3 px-6 w-10p">{{$no++}}</td>
                     <td class="py-3 px-6 w-45p">{{$penyedias->nama}}</td>
-                    <td class="py-3 px-6 w-45p">{{round($penyedias->pekerjaans()->avg('nilai_total'),1)}}</td>
+                    <td class="py-3 px-6 w-45p">{{$penyedias->nilai_total_avg }}</td>
                     </tr>
 
                     @endforeach
