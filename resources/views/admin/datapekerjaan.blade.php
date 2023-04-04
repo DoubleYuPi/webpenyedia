@@ -213,6 +213,10 @@
     toastr.success("{{session()->get('message')}}")  
   @endif
 
+  @if (session()->has('warning'))
+    toastr.error("{{session()->get('warning')}}")  
+  @endif
+
   $('.delete').click(function(){
     var idpekerjaan = $(this).attr('data-id');
     var namapekerjaan = $(this).attr('data-nama');

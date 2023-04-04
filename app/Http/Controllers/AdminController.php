@@ -119,13 +119,28 @@ class AdminController extends Controller
         //     $pekerjaan->save();
         // }
         if($request->hasFile('gambar')){        
-            $fileExtension = $request->file('gambar')->getClientOriginalExtension();
-            $basename = uniqid(time());
-            $filename = $basename.'.'.$fileExtension;
+            $file = $request->file('gambar');
+            $allowedExtensions = ['jpg', 'jpeg', 'png'];
+            $maxSize = 5 * 1024 * 1024; // 5 MB
             
-            $request->file('gambar')->move('gambarpekerjaan/', $filename);
-            $pekerjaan->gambar = $filename;
-            $pekerjaan->save();
+            // Check if the file extension and size are allowed
+            if ($file->isValid() && in_array(strtolower($file->getClientOriginalExtension()), $allowedExtensions) && $file->getSize() <= $maxSize) {
+                
+                // Generate a unique filename and move the file to the desired directory
+                $basename = uniqid(time());
+                $filename = $basename.'.'.$file->getClientOriginalExtension();
+                $file->move('gambarpekerjaan/', $filename);
+                
+                // Update the database with the new filename
+                $pekerjaan->gambar = $filename;
+                $pekerjaan->save();
+            } else {
+                // File is not valid, delete it and show a warning
+                if ($file->isValid()) {
+                    unlink($file->getPathname());
+                }
+                return back()->with('warning', 'File harus berupa JPG atau PNG dan tidak boleh lebih dari 5MB.');
+            }
         }
 
 
@@ -150,13 +165,25 @@ class AdminController extends Controller
         //     $pekerjaan->save();
 
         if($request->hasFile('gambar')){        
-                $fileExtension = $request->file('gambar')->getClientOriginalExtension();
-                $basename = uniqid(time());
-                $filename = $basename.'.'.$fileExtension;
+            $file = $request->file('gambar');
+            $allowedExtensions = ['jpg', 'jpeg', 'png'];
+            $maxSize = 5 * 1024 * 1024; // 5 MB
+            
+            // Check if the file extension and size are allowed
+            if ($file->isValid() && in_array(strtolower($file->getClientOriginalExtension()), $allowedExtensions) && $file->getSize() <= $maxSize) {
                 
-                $request->file('gambar')->move('gambarpekerjaan/', $filename);
+                // Generate a unique filename and move the file to the desired directory
+                $basename = uniqid(time());
+                $filename = $basename.'.'.$file->getClientOriginalExtension();
+                $file->move('gambarpekerjaan/', $filename);
+                
+                // Update the database with the new filename
                 $pekerjaan->gambar = $filename;
                 $pekerjaan->save();
+            } else {
+                // File is not valid, show a warning
+                return back()->with('warning', 'File harus berupa JPG atau PNG dan tidak boleh lebih dari 5MB.');
+            }
 
             // $fileExtension = $request->file('gambar')->getClientOriginalExtension();
             // $basename = uniqid(time());
@@ -375,8 +402,21 @@ class AdminController extends Controller
 			]);
 
             if($request->hasFile('bahp')){
-                $request->file('bahp')->move('dokumenpekerjaan/', $request->file('bahp')->getClientOriginalName());
-                $pekerjaan->bahp = $request->file('bahp')->getClientOriginalName();
+                $allowedFileTypes = ['pdf', 'doc', 'docx'];
+                $file = $request->file('bahp');
+                $fileExtension = strtolower($file->getClientOriginalExtension());
+                $fileSize = $file->getSize();
+
+                if (!in_array($fileExtension, $allowedFileTypes)) {
+                    return back()->with('error', 'Hanya file PDF atau WORD yang diperbolehkan.');
+                }
+
+                if ($fileSize > 1000000) {
+                    return back()->with('error', 'Ukuran file terlalu besar. Maksimal 1MB.');
+                }
+
+                $file->move('dokumenpekerjaan/', $file->getClientOriginalName());
+                $pekerjaan->bahp = $file->getClientOriginalName();
                 $pekerjaan->save();
             }
 			
@@ -389,8 +429,21 @@ class AdminController extends Controller
         }elseif($pekerjaan->personil == null){
             $pekerjaan->update($request->all());
             if($request->hasFile('bahp')){
-                $request->file('bahp')->move('dokumenpekerjaan/', $request->file('bahp')->getClientOriginalName());
-                $pekerjaan->bahp = $request->file('bahp')->getClientOriginalName();
+                $allowedFileTypes = ['pdf', 'doc', 'docx'];
+                $file = $request->file('bahp');
+                $fileExtension = strtolower($file->getClientOriginalExtension());
+                $fileSize = $file->getSize();
+
+                if (!in_array($fileExtension, $allowedFileTypes)) {
+                    return back()->with('error', 'File type not supported. Please upload a PDF or Word document.');
+                }
+
+                if ($fileSize > 1000000) {
+                    return back()->with('error', 'File size too large. Please upload a file less than 1MB.');
+                }
+
+                $file->move('dokumenpekerjaan/', $file->getClientOriginalName());
+                $pekerjaan->bahp = $file->getClientOriginalName();
                 $pekerjaan->save();
             }
 

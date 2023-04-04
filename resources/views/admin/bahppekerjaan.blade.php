@@ -173,6 +173,10 @@
     toastr.success("{{session()->get('message')}}")  
   @endif
 
+  @if (session()->has('error'))
+    toastr.error("{{session()->get('error')}}")  
+  @endif
+
   $('.nilai').click(function(){
     var idpekerjaan = $(this).attr('data-id');
     var form = $(this).parents('form');

@@ -33,6 +33,8 @@
   <!-- Select2 -->
   <link rel="stylesheet" href="../admin/plugins/select2/css/select2.min.css">
   <link rel="stylesheet" href="../admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <!--Toastr-->
+  <link rel="stylesheet" href="../admin/plugins/toastr/toastr.min.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -144,6 +146,8 @@
 <script src="../admin/dist/js/pages/dashboard.js"></script>
 <!-- Select2 -->
 <script src="../admin/plugins/select2/js/select2.full.min.js"></script>
+<!-- Toastr -->
+<script src="../admin/plugins/toastr/toastr.min.js"></script>
 <script>
   $(function () {
     $('#tabelpenyedia').DataTable({
@@ -165,6 +169,10 @@
         format: 'YYYY-MM-DD'
     });
   });
+
+  @if (session()->has('warning'))
+    toastr.error("{{session()->get('warning')}}")  
+  @endif
 </script>
 </body>
 </html>
