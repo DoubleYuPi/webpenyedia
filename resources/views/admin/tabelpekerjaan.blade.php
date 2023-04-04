@@ -62,8 +62,10 @@
                           <img src="{{asset('gambarpekerjaan/'.$pekerjaans->gambar)}}" style="width: 100px"alt="">
                         </td>
                           @if (is_null($pekerjaans->bahp))
-                            <td class="text-warning">Dalam proses pekerjaan</td>
-                          @else
+                            <td class="text-danger">Dalam proses pekerjaan</td>
+                          @elseif($pekerjaans->bahp != null && $pekerjaans->nilai_total == '0')
+                            <td class="text-warning">Pekerjaan Selesai. Menunggu proses penilaian</td>
+                          @elseif($pekerjaans->nilai_total >= '0' || $pekerjaans->status=='Surat Pemutusan Kontrak Karena Kesalahan Penyedia')
                             <td class="text-success">Pekerjaan Selesai</td>
                           @endif
                         <td>
