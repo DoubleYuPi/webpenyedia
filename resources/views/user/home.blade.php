@@ -199,6 +199,16 @@
     <div class="page-section">
       <div class="container">
         <div id="map" style="width: 100%; height: 500px;"></div>
+        <div>
+          <label for="year">Pilih Tahun:</label>
+          <select id="year">
+              <option value="all">Semua</option>
+              @foreach ($pekerjaan->unique('ta') as $pekerjaans)
+                  <option value="{{ $pekerjaans->ta }}">{{$pekerjaans->ta}}</option>
+              @endforeach
+          </select>
+        </div>
+
           <script>
             var map = L.map('map').setView([-0.020556, 109.341389], 13);
   
@@ -207,10 +217,35 @@
               attribution: '© OpenStreetMap'
               }).addTo(map);
 
+              var markers = [];
+
               //marker
               @foreach ($pekerjaan as $pekerjaans)
-                L.marker([{{$pekerjaans->lati}}, {{$pekerjaans->longi}}]).bindPopup("{{$pekerjaans->nama}} <p>{{$pekerjaans->lokasi}}</p> <img src='{{asset('gambarpekerjaan/'.$pekerjaans->gambar)}}' style='width: 150px' />").addTo(map);
+                var marker = L.marker([{{$pekerjaans->lati}}, {{$pekerjaans->longi}}]).bindPopup("{{$pekerjaans->nama}} <p>{{$pekerjaans->lokasi}}</p> <img src='{{asset('gambarpekerjaan/'.$pekerjaans->gambar)}}' style='width: 150px' />");
+                markers.push({marker: marker, ta: '{{$pekerjaans->ta}}'});
               @endforeach
+
+              function filterMarkers(ta) {
+                for (var i = 0; i < markers.length; i++) {
+                  var markerTa = markers[i].ta;
+                    if (ta == "all" || markerTa === ta) {
+                      markers[i].marker.addTo(map);
+                    } else {
+                        markers[i].marker.removeFrom(map);
+                    }
+                }
+              }
+               // Initialize markers with the current year shown
+              var currentYear = new Date().getFullYear().toString();
+              filterMarkers(currentYear);
+              document.getElementById("year").value = currentYear;
+
+              // Filter markers when user selects a year
+              document.getElementById("year").addEventListener("change", function() {
+              var ta = this.value;
+              filterMarkers(ta);
+              });
+
           </script>
       </div>
     </div>
