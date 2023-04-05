@@ -52,6 +52,7 @@
                   <label>Status</label>
                   <select class="form-control select2bs4" style="width: 100%;" name="status">
                     <option selected="selected">ppk</option>
+                    <option>pp</option>
                   </select>
                 </div>
                 <div class="form-group">

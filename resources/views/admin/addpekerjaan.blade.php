@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
   <link rel="icon" href="admin/dist/img/logomandor.jpeg">
   <title>SI-MANDOR</title>
 
@@ -35,6 +36,8 @@
   <link rel="stylesheet" href="admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
   <!--Toastr-->
   <link rel="stylesheet" href="../admin/plugins/toastr/toastr.min.css">
+  <!--AJAX-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -167,6 +170,39 @@
     //Date picker
     $('#reservationdate').datetimepicker({
         format: 'YYYY-MM-DD'
+    });
+
+    $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+
+    $('#noko').blur(function(){
+      var error_noko = '';
+      var noko = $('#noko').val();
+      var _token = $('input[name="_token"]').val();
+      $.ajax({
+        url:'/pekerjaanbaru/pekerjaanbarucheck',
+        method:'POST',
+        data:{noko:noko, _token:_token},
+        success:function(result)
+        {
+          console.log(result.message)
+          if(result.message == 'unique')
+          {
+            $('#error_noko').html('<label class="text-success">Success</label>');
+            $('#noko').removeClass('has-error');
+            $('#submit').attr('disabled', false);
+          }
+          else
+          {
+            $('#error_noko').html('<label class="text-danger">Nomor Kontrak sudah terdaftar di dalam sistem! Mohon input Nomor Kontrak baru!</label>');
+            $('#noko').addClass('has-error');
+            $('#submit').attr('disabled', 'disabled');
+          }
+        }
+      })
     });
   });
 

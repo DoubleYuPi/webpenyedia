@@ -26,6 +26,7 @@
                       <tr>
                         <th style="width: 10px">Tahun Anggaran</th>
                         <th>Paket Pekerjaan</th>
+                        <th>Nomor Kontrak</th>
                         <th>Tanggal Kontrak</th>
                         <th>Nama Perusahaan</th>
                         <th>Jenis Pekerjaan</th>
@@ -45,6 +46,7 @@
                       <tr>
                         <td>{{$pekerjaans->ta}}</td>
                         <td>{{$pekerjaans->pekerjaan}}</td>
+                        <td>{{$pekerjaans->noko}}</td>
                         <td>{{$pekerjaans->tanggal->format('d/m/Y')}}</td>
                         <td><a href="/profilpenyedia/{{$pekerjaans->penyedia->id}}">{{$pekerjaans->penyedia->nama}}</a></td>
                         <td>{{$pekerjaans->jeniskerja->nama_jenis}}</td>
@@ -72,9 +74,11 @@
                             @if (Auth::user()->status=='super')
                               <a href="/editpekerjaan/{{$pekerjaans->id}}" type="button" class="btn btn-outline-primary">Edit</a>
                               <a href="#" type="button" class="btn btn-outline-danger delete" data-id="{{$pekerjaans->id}}" data-nama="{{$pekerjaans->pekerjaan}}">Hapus</a>
+                            @elseif($pekerjaans->bahp != null || $pekerjaans->nilai_total > '0')
+                              <a href="/editpekerjaan/{{$pekerjaans->id}}" type="button" class="btn btn-outline-primary">Edit</a>
                             @else
                             <a href="/editpekerjaan/{{$pekerjaans->id}}" type="button" class="btn btn-outline-primary btn-block">Edit</a>
-                              
+                            <a href="#" type="button" class="btn btn-outline-danger delete" data-id="{{$pekerjaans->id}}" data-nama="{{$pekerjaans->pekerjaan}}">Hapus</a>
                             @endif
                         </td>
                         <td><a href="/tambahpersonil/{{$pekerjaans->id}}" type="button" class="btn btn-outline-success btn-block">Tambah</a></td>

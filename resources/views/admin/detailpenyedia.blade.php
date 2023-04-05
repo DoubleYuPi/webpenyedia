@@ -85,7 +85,7 @@
     <div class="card card-default collapsed-card">
       <div class="card-header collapsed-card">
         <h3 class="card-title">
-          <b>{{$jeniskerjas->nama_jenis}} - {{round($jeniskerjas->pekerjaans()->where('penyedia_id', $penyedia->id)->avg('nilai_total'),1)}}</b>
+          <b>{{$jeniskerjas->nama_jenis}} - {{round($jeniskerjas->pekerjaans()->where('penyedia_id', $penyedia->id)->whereNotNull('status')->avg('nilai_total'),1)}}</b>
         </h3>
     
         <div class="card-tools">
@@ -98,23 +98,23 @@
         <table id="tabeldetail" class="table table-bordered display" style="width: 100%">
           <thead>
             <tr>
-              <th style="width: 10px" rowspan="2">Tahun Anggaran</th>
-              <th rowspan="2">Tanggal Kontrak</th>
-              <th rowspan="2">Paket Pekerjaan</th>
-              <th rowspan="2">Nama Perusahaan</th>
-              <th rowspan="2">Lokasi Pekerjaan</th>
-              <th rowspan="2">Jenis Pekerjaan</th>
-              <th rowspan="2">HPS</th>
-              <th rowspan="2">Nilai</th>
-              <th rowspan="2">Kriteria</th>
-              <th rowspan="2">Dokumen</th>
-              <th colspan="2">Tanggal</th>
+              <th style="width: 10px">Tahun Anggaran</th>
+              <th>Tanggal Kontrak</th>
+              <th>Paket Pekerjaan</th>
+              <th>Nama Perusahaan</th>
+              <th>Lokasi Pekerjaan</th>
+              <th>Jenis Pekerjaan</th>
+              <th>Nilai Kontrak</th>
+              <th>Nilai</th>
+              <th>Kriteria</th>
+              <th>Dokumen</th>
+              {{-- <th colspan="2">Tanggal</th> --}}
             </tr>
 
-            <tr>
+            {{-- <tr>
               <td>Tgl Buat</td>
               <td>Tgl Update</td>
-            </tr>
+            </tr> --}}
           </thead>
           <tbody>
             @php $no = 1; /*$totalNilai = 0.0;*/ @endphp
@@ -126,7 +126,7 @@
               <td>{{$pekerjaans->penyedia->nama}}</td>
               <td>{{$pekerjaans->lokasi}}</td>
               <td>{{$pekerjaans->jeniskerja->nama_jenis}}</td>
-              <td>Rp. {{number_format($pekerjaans->hps,0,',',',')}}</td>
+              <td>Rp. {{number_format($pekerjaans->nilai_kontrak,0,',',',')}}</td>
               @php
               $pekerjaans->nilai_total = $pekerjaans->nilai_1 + $pekerjaans->nilai_2 + $pekerjaans->nilai_3 + $pekerjaans->nilai_4;
               @endphp
@@ -143,13 +143,13 @@
               <td>Sangat Baik</td>
               @endif
               <td><a href="{{ route('pekerjaans.download', $pekerjaans->id) }}"><u>{{$pekerjaans->status}}</u></a></td>
-              <td>
+              {{-- <td>
                  
-              </td>
-              <td>
+              </td> --}}
+              {{-- <td>
                 
                 
-              </td>
+              </td> --}}
             </tr>
             @endforeach
           </tbody>

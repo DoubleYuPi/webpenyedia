@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('pekerjaans', function (Blueprint $table) {
             $table->id();
             $table->string('pekerjaan');
+            $table->string('noko');
             $table->integer('ta');
             $table->date('tanggal');
             $table->string('lokasi');

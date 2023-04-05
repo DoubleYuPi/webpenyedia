@@ -110,6 +110,23 @@ class AdminController extends Controller
         return view('admin.addpekerjaan', compact('penyedia','user','jeniskerja'));
     }
 
+    public function pekerjaanbarucheck(Request $request){
+        if($request->get('noko')){
+            $noko = $request->get('noko');
+            $data = DB::table("pekerjaans")
+             ->where('noko', $noko)
+             ->count();
+            if($data > 0)
+            {
+                return response()->json(['message' => 'not_unique']);
+            }
+            else
+            {
+                return response()->json(['message' => 'unique']);
+            }
+        }
+    }
+
     public function insertpekerjaan(Request $request){
         
         $pekerjaan = Pekerjaan::create($request->all());

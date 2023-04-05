@@ -30,6 +30,11 @@
                   <input type="text" name="pekerjaan" class="form-control" id="exampleInputEmail1" placeholder="Pekerjaan">
                 </div>
                 <div class="form-group">
+                  <label for="exampleInputEmail1">Nomor Kontrak</label>
+                  <input type="text" name="noko" class="form-control" id="noko" placeholder="Nomor Kontrak">
+                </div>
+                <span id="error_noko"></span>
+                <div class="form-group">
                   <label>Tanggal</label>
                     <div class="input-group date" id="reservationdate" data-target-input="nearest">
                         <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" name="tanggal"/>
@@ -120,7 +125,7 @@
 
               <div class="card-footer">
                 <a href="/datapekerjaan" type="button" class="btn btn-outline-secondary">Kembali</a>
-                <button type="submit" class="btn btn-outline-primary">Submit</button>
+                <button type="submit" id="submit" class="btn btn-outline-primary">Submit</button>
               </div>
             </form>
           </div>

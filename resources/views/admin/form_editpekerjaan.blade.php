@@ -27,6 +27,10 @@
                     <input type="text" name="pekerjaan" class="form-control" id="exampleInputEmail1" placeholder="Pekerjaan" value="{{$pekerjaan->pekerjaan}}">
                   </div>
                   <div class="form-group">
+                    <label for="exampleInputEmail1">Nomor Kontrak</label>
+                    <input type="text" name="noko" class="form-control" id="exampleInputEmail1" placeholder="Nomor Kontrak" value="{{$pekerjaan->noko}}">
+                  </div>
+                  <div class="form-group">
                     <label>Tanggal</label>
                       <div class="input-group date" id="reservationdate" data-target-input="nearest">
                           <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" name="tanggal" value="{{$pekerjaan->tanggal}}"/>

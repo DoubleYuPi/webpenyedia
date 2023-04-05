@@ -270,7 +270,7 @@
                     @php 
                     $no = 1; 
                     $penyedia = App\Models\Penyedia::withCount(['pekerjaans as nilai_total_avg' => function ($query) {
-                    $query->select(DB::raw('ROUND(AVG(nilai_total), 1)'));
+                    $query->select(DB::raw('ROUND(AVG(nilai_total), 1)'))->whereNotNull('status');
                     }])->orderByDesc('nilai_total_avg')->take(10)->get();
                     @endphp
                     @foreach ($penyedia as $penyedias)

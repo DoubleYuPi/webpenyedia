@@ -135,7 +135,7 @@
                           <tr>
                             <td>{{$no++}}</td>
                             <td>{{$penyedias->nama}}</td>
-                            <td>{{round($penyedias->pekerjaans()->avg('nilai_total'),1)}}</td>
+                            <td>{{round($penyedias->pekerjaans()->whereNotNull('status')->avg('nilai_total'),1)}}</td>
                           </tr>
                           @endforeach
                         </tbody>

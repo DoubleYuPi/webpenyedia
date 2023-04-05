@@ -53,6 +53,8 @@ Route::get('/datapekerjaan',[AdminController::class,'tabelpekerjaan'])->name('da
 
 Route::get('/tambahpekerjaan',[AdminController::class,'tambahpekerjaan']);
 
+Route::post('/pekerjaanbaru/pekerjaanbarucheck',[AdminController::class,'pekerjaanbarucheck'])->name('pekerjaanbarucheck');
+
 Route::post('/insertpekerjaan',[AdminController::class,'insertpekerjaan']);
 
 Route::get('/editpekerjaan/{id}',[AdminController::class,'editpekerjaan']);
