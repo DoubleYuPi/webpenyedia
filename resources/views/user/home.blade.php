@@ -221,7 +221,7 @@
 
               //marker
               @foreach ($pekerjaan as $pekerjaans)
-                var marker = L.marker([{{$pekerjaans->lati}}, {{$pekerjaans->longi}}]).bindPopup("{{$pekerjaans->nama}} <p>{{$pekerjaans->lokasi}}</p> <img src='{{asset('gambarpekerjaan/'.$pekerjaans->gambar)}}' style='width: 150px' />");
+                var marker = L.marker([{{$pekerjaans->lati}}, {{$pekerjaans->longi}}]).bindPopup("{{$pekerjaans->pekerjaan}} <p>{{$pekerjaans->lokasi}}</p> <img src='{{asset('gambarpekerjaan/'.$pekerjaans->gambar)}}' style='width: 150px' />");
                 markers.push({marker: marker, ta: '{{$pekerjaans->ta}}'});
               @endforeach
 
@@ -280,8 +280,8 @@
                     <td class="py-3 px-6 w-45p">{{$penyedias->nama}}</td>
                     <td class="py-3 px-6 w-45p">{{$penyedias->nilai_total_avg }}</td>
                     </tr>
-
                     @endforeach
+                    <div>*Penilaian berdasarkan peraturan LKPP nomor</div>
               </table>    
 
           <!--<div class="col-lg-4 py-3 wow fadeInUp">
