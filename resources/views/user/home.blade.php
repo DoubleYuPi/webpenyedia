@@ -281,7 +281,7 @@
                     <td class="py-3 px-6 w-45p">{{$penyedias->nilai_total_avg }}</td>
                     </tr>
                     @endforeach
-                    <div>*Penilaian berdasarkan peraturan LKPP nomor</div>
+                    <div>*Penilaian berdasarkan <a href="{{asset('dokumenlain/Peraturan Lembaga Nomor 4 Tahun 2021_1796_1.pdf')}}" target="_blank">Peraturan LKPP Nomor 4 tahun 2021 tentang Pembinaan Pelaku Usaha Pengadaan Barang/Jasa Pemerintah.</a></div>
               </table>    
 
           <!--<div class="col-lg-4 py-3 wow fadeInUp">
