@@ -291,7 +291,7 @@
           </div>-->
         </div>
       </div> <!-- .container -->
-    </div> <!-- .page-section -->*
+    </div> <!-- .page-section -->
   
 
   </main>
