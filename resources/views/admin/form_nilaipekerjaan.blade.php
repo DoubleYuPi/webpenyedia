@@ -42,6 +42,8 @@
     </section>
 
     <section class="content">
+      <div><b>*Penilaian berdasarkan <a href="{{asset('dokumenlain/Peraturan Lembaga Nomor 4 Tahun 2021_1796_1.pdf')}}" target="_blank"><u><span style="color:red;">Peraturan LKPP Nomor 4 tahun 2021 tentang Pembinaan Pelaku Usaha Pengadaan Barang/Jasa Pemerintah</span>.</u></a></b></div>
+      <br>
       <div class="container-fluid">
         <form action="/updatenilaipekerjaan/{{$pekerjaan->id}}" method="POST" enctype="multipart/form-data">
           @csrf
