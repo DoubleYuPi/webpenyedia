@@ -33,13 +33,10 @@ class AdminController extends Controller
     }
 
     public function tabelpenyedia(){
-        if(Auth::user()->status=='super'){
             $penyedia = Penyedia::all();
 
             return view('admin.datapenyedia', compact('penyedia'));
-        }else{
-            return redirect()->back();
-        }
+
         
     }
 

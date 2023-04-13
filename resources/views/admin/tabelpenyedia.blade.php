@@ -35,8 +35,12 @@
                         <td>{{$penyedias->telp}}</td>
                         <td>{{$penyedias->alamat}}</td>
                         <td>
+                          @if (Auth::user()->status=='pp')
+                            <a href="/profilpenyedia/{{$penyedias->id}}" type="button" class="btn btn-outline-primary">Detail</a>
+                          @else
                             <a href="/editpenyedia/{{$penyedias->id}}" type="button" class="btn btn-outline-primary">Edit</a>
                             <a href="#" type="button" class="btn btn-outline-danger delete" data-id="{{$penyedias->id}}" data-nama="{{$penyedias->nama}}">Hapus</a>
+                          @endif
                         </td>
                       </tr>
                       @endforeach

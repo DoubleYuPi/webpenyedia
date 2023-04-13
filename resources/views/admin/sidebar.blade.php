@@ -25,6 +25,7 @@
             </p>
           </a>
         </li>
+        @if(Auth::user()->status=='pp')
         <li class="nav-item {{ request()->is('datapenyedia', 'datapekerjaan', 'datapersonil') ? 'menu-open' : ''}}">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-table"></i>
@@ -34,15 +35,36 @@
             </p>
           </a>
           <ul class="nav nav-treeview">
-            @if (Auth::user()->status=='super')
               <li class="nav-item">
                 <a href="{{url('datapenyedia')}}" class="nav-link {{ request()->is('datapenyedia') ? 'active' : ''}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Tabel Penyedia</p>
                 </a>
               </li>
-            
-            @endif
+            <li class="nav-item">
+              <a href="{{url('datapersonil')}}" class="nav-link {{ request()->is('datapersonil') ? 'active' : ''}}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Data Personil</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        @else
+        <li class="nav-item {{ request()->is('datapenyedia', 'datapekerjaan', 'datapersonil') ? 'menu-open' : ''}}">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-table"></i>
+            <p>
+              Manage Data 
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{url('datapenyedia')}}" class="nav-link {{ request()->is('datapenyedia') ? 'active' : ''}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tabel Penyedia</p>
+                </a>
+              </li>
             <li class="nav-item">
               <a href="{{url('datapekerjaan')}}" class="nav-link {{ request()->is('datapekerjaan') ? 'active' : ''}}">
                 <i class="far fa-circle nav-icon"></i>
@@ -57,6 +79,8 @@
             </li>
           </ul>
         </li>
+        @endif
+        
         @if(Auth::user()->status=='super')
         <li class="nav-header">PENILAIAN</li>
         <li class="nav-item">
@@ -67,7 +91,7 @@
             </p>
           </a>
         </li>
-        @else
+        @elseif(Auth::user()->status=='ppk')
         <li class="nav-header">PENILAIAN</li>
         <li class="nav-item">
           <a href="{{url('nilaipekerjaan')}}" class="nav-link {{ request()->is('nilaipekerjaan') ? 'active' : ''}}"">
