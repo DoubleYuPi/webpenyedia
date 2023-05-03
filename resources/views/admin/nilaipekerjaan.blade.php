@@ -173,30 +173,56 @@
     toastr.success("{{session()->get('message')}}")  
   @endif
 
-  $('.nilai').click(function(){
+  $('.nilai').click(function(e){
+  // Prevent the default form submission behavior
+  e.preventDefault();
+
+  // Check if a radio button in each section is selected
+  var isRadioSelected = true;
+  $('input[type="radio"][name^="nilai"]').each(function(index, radio){
+    var sectionName = $(radio).attr('name');
+    var isChecked = $('input[type="radio"][name="' + sectionName + '"]:checked').length > 0;
+    if(!isChecked){
+      isRadioSelected = false;
+      return false;
+    }
+  });
+
+  if(isRadioSelected){
+    // If a radio button in each section is selected, submit the form
     var idpekerjaan = $(this).attr('data-id');
     var form = $(this).parents('form');
 
     Swal.fire({
-  title: 'Apakah Anda yakin?',
-  text: "Penilaian yang telah dilakukan tidak dapat diedit kembali!",
-  icon: 'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  confirmButtonText: 'Ya, yakin!'
-}).then((result) => {
-  if (result.isConfirmed) {
-    window.location = "/nilai/"+idpekerjaan+""
-    form.submit();
-    Swal.fire(
-      'Berhasil!',
-      'Data berhasil dinilai.',
-      'success'
-    )
+      title: 'Apakah Anda yakin?',
+      text: "Penilaian yang telah dilakukan tidak dapat diedit kembali!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, yakin!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location = "/nilai/"+idpekerjaan+""
+        form.submit();
+        Swal.fire(
+          'Berhasil!',
+          'Data berhasil dinilai.',
+          'success'
+        )
+      }
+    });
+  } else {
+    // If a radio button in each section is not selected, show an error message using SweetAlert
+    Swal.fire({
+      title: 'Peringatan!',
+      text: "Anda belum memberi nilai! Mohon untuk dicek kembali.",
+      icon: 'warning',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'OK'
+    });
   }
 });
-  });
 </script>
 </body>
 </html>
