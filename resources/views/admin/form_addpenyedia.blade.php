@@ -11,7 +11,7 @@
                 @csrf
               <div class="card-body">
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Nama</label>
+                  <label for="exampleInputEmail1">Nama Usaha</label>
                   <input type="text" name="nama" class="form-control" id="nama" placeholder="Nama Perusahaan">
                   <span id="error_nama"></span>
                 </div>
@@ -27,6 +27,10 @@
                     <option value="CV">Perseroan Komanditer (CV)</option>
                     <option value="PT">Perseroan Terbatas (PT)</option>
                   </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Nama Direksi (Direktur)</label>
+                  <input type="text" name="direksi" class="form-control" id="exampleInputPassword1" placeholder="Nama Direktur">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Email</label>

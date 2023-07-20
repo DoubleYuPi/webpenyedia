@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('npwp');
             $table->string('bentuk_usaha');
+            $table->string('direksi');
             $table->string('email');
             $table->string('telp');
             $table->string('alamat');

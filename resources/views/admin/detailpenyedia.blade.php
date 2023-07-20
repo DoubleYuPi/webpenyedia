@@ -9,6 +9,7 @@
       <div class="card-body">
         <div class="col-12">
           <h5><i class="fas fa-id-card"></i>&nbsp NPWP: {{$penyedia->npwp}}</h5><br>
+          <h5><i class="fas fa-user"></i>&nbsp Nama Direktur: {{$penyedia->direksi}}</h5><br>
           <h5><i class="fas fa-map-pin"></i>&nbsp Alamat: {{$penyedia->alamat}}</h5>
         </div>
       </div>
